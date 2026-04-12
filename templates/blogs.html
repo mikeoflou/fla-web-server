@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EHBC Newsletter Hub</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body { background-color: #1a1a1a; color: #28a745 !important; font-family: 'Arial Black', sans-serif !important; padding-bottom: 50px; }
+        .header-container { text-align: center; padding: 30px 10px; }
+        .main-header { font-weight: 900; line-height: 1.1; text-transform: uppercase; font-size: 2rem; color: #28a745 !important; margin: 0; }
+        .green-divider { border-top: 5px solid #28a745; opacity: 1; margin: 20px auto 40px auto; width: 90%; }
+        .custom-card { background-color: transparent; border: 2px solid #28a745; border-radius: 15px; margin-bottom: 25px; padding: 10px; }
+        .card-title-text { color: #28a745 !important; font-size: 1.4rem; margin: 0; text-transform: uppercase; }
+        .btn-open { color: #1a1a1a !important; background-color: #28a745 !important; font-weight: bold; text-transform: uppercase; padding: 8px 20px; text-decoration: none; border-radius: 8px; border: 2px solid #28a745; }
+        .btn-open:hover { background-color: transparent !important; color: #28a745 !important; }
+        .edit-link { font-size: 0.75rem; text-decoration: none; color: #28a745 !important; text-transform: uppercase; font-weight: bold; display: block; margin-top: 5px; }
+    </style>
+</head>
+<body>
+    <nav>
+        
+    </nav>
+<div class="container">
+    <div class="header-container">
+        <h1 class="main-header">EASTERN HEIGHTS<br>BAPTIST CHURCH<br>NEWSLETTER</h1>
+        <div class="green-divider"></div>
+    </div>
+
+    <div class="card custom-card">
+        <div class="card-body d-flex justify-content-between align-items-center">
+            <div style="flex: 1;"><h3 class="card-title-text">Order of Worship</h3></div>
+            <div class="text-end">
+                <a href="{{ url_for('jason') }}" class="btn-open">OPEN</a>
+                {% if current_user.is_authenticated %}<a href="{{ url_for('update_jason') }}" class="edit-link">EDIT</a>{% endif %}
+            </div>
+        </div>
+    </div>
+
+    <div class="card custom-card">
+        <div class="card-body d-flex justify-content-between align-items-center">
+            <div style="flex: 1;"><h3 class="card-title-text">Sermon and Outline</h3></div>
+            <div class="text-end">
+                <a href="{{ url_for('Chris') }}" class="btn-open">OPEN</a>
+                {% if current_user.is_authenticated %}<a href="{{ url_for('update_Chris') }}" class="edit-link">EDIT</a>{% endif %}
+            </div>
+        </div>
+    </div>
+
+    
+    {% for post in posts %}
+{% endfor %}
+</body>
+</html>

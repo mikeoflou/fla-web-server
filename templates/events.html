@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div style="padding: 20px; max-width: 960px; margin: 30px auto;">
+
+    <h1 style="text-align: center; color: #2ecc71; margin: 0 0 6px 0; font-size: 2.2rem;">Upcoming Events</h1>
+    <p style="text-align: center; color: #9adfaa; margin: 0 0 32px 0; font-size: 1.1rem;">Join us for fellowship and ministry</p>
+
+    {% if can_manage('pages') %}
+    <div style="text-align: center; margin-bottom: 28px;">
+        <a href="{{ url_for('manage_events') }}" style="display: inline-block; background: #1f6f3a; color: #fff; text-decoration: none; border-radius: 6px; padding: 10px 20px; font-weight: bold;">
+            &#43; Manage Events
+        </a>
+    </div>
+    {% endif %}
+
+    {% if events %}
+    <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 24px;">
+        {% for event in events %}
+        <div style="background: #0d0d0d; border: 2px solid #2ecc71; border-radius: 12px; overflow: hidden; display: flex; flex-direction: column;">
+
+            {% if event.hero_image %}
+            <a href="{{ url_for('event_detail', event_id=event.id) }}" style="display: block; overflow: hidden;">
+                <img src="{{ url_for('static', filename='images/events/' + event.hero_image) }}"
+                     alt="{{ event.title }}"
+                     style="width: 100%; height: 200px; object-fit: cover; display: block; transition: transform 0.2s;"
+                     onmouseover="this.style.transform='scale(1.03)'" onmouseout="this.style.transform='scale(1)'"
+                     onerror="this.parentElement.style.display='none';">
+            </a>
+            {% else %}
+            <div style="width: 100%; height: 120px; background: #1a5f1a; display: flex; align-items: center; justify-content: center;">
+                <span style="font-size: 3rem;">&#128197;</span>
+            </div>
+            {% endif %}
+
+            <div style="padding: 16px; flex: 1; display: flex; flex-direction: column; gap: 8px;">
+                <h2 style="color: #2ecc71; margin: 0; font-size: 1.25rem; line-height: 1.3;">{{ event.title }}</h2>
+
+                <div style="display: flex; flex-direction: column; gap: 3px;">
+                    {% if event.date %}
+                    <span style="color: #9adfaa; font-size: 0.9rem;">&#128197; {{ event.date }}</span>
+                    {% endif %}
+                    {% if event.time %}
+                    <span style="color: #9adfaa; font-size: 0.9rem;">&#128336; {{ event.time }}</span>
+                    {% endif %}
+                    {% if event.location %}
+                    <span style="color: #9adfaa; font-size: 0.9rem;">&#128205; {{ event.location }}</span>
+                    {% endif %}
+                </div>
+
+                {% if event.description %}
+                <p style="color: #ccc; font-size: 0.95rem; margin: 0; line-height: 1.5; flex: 1;">
+                    {{ event.description[:120] }}{% if event.description|length > 120 %}&#8230;{% endif %}
+                </p>
+                {% endif %}
+
+                <a href="{{ url_for('event_detail', event_id=event.id) }}"
+                   style="display: inline-block; margin-top: 8px; background: #2ecc71; color: #000; text-decoration: none; border-radius: 6px; padding: 8px 16px; font-weight: bold; font-size: 0.9rem; text-align: center;">
+                    Learn More &rarr;
+                </a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    {% else %}
+    <div style="text-align: center; padding: 60px 20px; border: 2px dashed #2ecc71; border-radius: 12px;">
+        <p style="font-size: 3rem; margin: 0 0 12px 0;">&#128197;</p>
+        <p style="color: #9adfaa; font-size: 1.2rem; margin: 0;">No upcoming events at this time.</p>
+        <p style="color: #666; font-size: 0.95rem; margin: 8px 0 0 0;">Check back soon!</p>
+    </div>
+    {% endif %}
+
+</div>
+{% endblock %}

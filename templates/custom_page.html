@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div style="padding: 20px; max-width: 900px; margin: 30px auto;">
+    {% if page_slug == 'contact' %}
+    <div style="margin-bottom: 28px; text-align: center;">
+        <img src="{{ url_for('static', filename='images/church_exterior.jpg') }}" alt="Eastern Heights Baptist Church" style="width: 100%; max-width: 600px; height: auto; border-radius: 10px; border: 2px solid #2ecc71;" onerror="this.style.display='none';">
+    </div>
+    {% endif %}
+
+    {% if page_slug == 'senior-adults' %}
+    <h1 style="text-align: center; margin: 0 0 10px 0; font-size: 2.2rem; color: #2ecc71;">Senior Adult Ministry</h1>
+    <h2 style="text-align: center; margin: 0 0 24px 0; font-size: 1.35rem; color: #9adfaa; font-weight: 600;">Join us on Thursdays at noon for lunch and Bible Study</h2>
+
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px; margin: 0 0 24px 0;">
+        <img src="{{ url_for('static', filename='images/senior_adults/seniorLogo.png') }}" alt="Senior Adult Ministry Logo" style="width: 100%; height: auto; object-fit: contain; border-radius: 10px; border: 2px solid #2ecc71;" onerror="this.style.display='none';">
+        <img src="{{ url_for('static', filename='images/senior_adults/SeniorBibleStudy.png') }}" alt="Senior Bible Study" style="width: 100%; height: 180px; object-fit: cover; border-radius: 10px; border: 2px solid #2ecc71;" onerror="this.style.display='none';">
+        <img src="{{ url_for('static', filename='images/senior_adults/SeniorBibleStudy1.png') }}" alt="Senior Bible Study 2" style="width: 100%; height: 180px; object-fit: cover; border-radius: 10px; border: 2px solid #2ecc71;" onerror="this.style.display='none';">
+        <img src="{{ url_for('static', filename='images/senior_adults/SeniorBibleStudy2.png') }}" alt="Senior Bible Study 3" style="width: 100%; height: 180px; object-fit: cover; border-radius: 10px; border: 2px solid #2ecc71;" onerror="this.style.display='none';">
+    </div>
+    {% endif %}
+
+    <div style="padding: 10px 0; white-space: pre-wrap; line-height: 1.9; font-size: 1.45rem; text-align: center;">
+        {{ page_content }}
+    </div>
+
+    {% if can_manage('pages') %}
+    <div style="margin-top: 16px; text-align: center;">
+        <a href="{{ url_for('manage_custom_page', slug=page_slug) }}" style="display: inline-block; background: #1f6f3a; color: #fff; text-decoration: none; border-radius: 6px; padding: 10px 14px; font-weight: bold;">
+            Edit This Page
+        </a>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

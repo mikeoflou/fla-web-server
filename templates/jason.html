@@ -1,0 +1,137 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div id="top" style="padding: 10px; text-align: center;">
+    
+    <span class="church-name">Eastern Heights Baptist Church</span>
+
+    <div class="worship-box">
+        <p style="margin-bottom: 10px;">
+            <strong>ORDER OF WORSHIP</strong>
+        </p>
+        <div class="worship-columns">
+            <div class="worship-column">
+                <h3 class="worship-column-title">April 5, 2026<br>Easter Sunday<br>He Has Risen from the Dead Alleluia!</h3>
+        <p>
+            <strong>Announcements / Opening Prayer:</strong>
+            <span class="person-name">{{ opening_prayer_name }}</span>
+        </p>
+        
+        <hr>
+
+        {% for song in april5_main_songs %}
+        <div style="text-align: left;">
+            <p><strong>{{ song.title }}</strong></p>
+            
+            <div class="video-container">
+                <iframe 
+                    src="https://www.youtube-nocookie.com/embed/{{ song.id }}" 
+                    frameborder="0" 
+                    allowfullscreen>
+                </iframe>
+            </div>
+            <p style="margin-top: -24px; margin-bottom: 8px; font-size: 0.95rem;">
+                If video is not apperating above, then press the play button to watch on YouTube.
+            </p>
+            <p style="margin-top: -4px; margin-bottom: 20px;">
+                <a href="https://www.youtube.com/watch?v={{ song.id }}" target="_blank" rel="noopener noreferrer" style="display: inline-block; padding: 8px 12px; border: 1px solid #2ecc71; border-radius: 8px; text-decoration: none; font-weight: 700;">Play on YouTube</a>
+            </p>
+        </div>
+        {% endfor %}
+
+        <hr>
+        
+        {% if prayer_song_title and prayer_song_youtube_id %}
+            <div style="text-align: left; margin-top: 10px;">
+                <p><strong>{{ prayer_song_title }}</strong></p>
+
+                <div class="video-container">
+                    <iframe
+                        src="https://www.youtube-nocookie.com/embed/{{ prayer_song_youtube_id }}"
+                        frameborder="0"
+                        allowfullscreen>
+                    </iframe>
+                </div>
+            </div>
+        {% endif %}
+
+        {% if prayer_song_title_2 and prayer_song_youtube_id_2 %}
+            <div style="text-align: left; margin-top: 10px;">
+                <p><strong>{{ prayer_song_title_2 }}</strong></p>
+
+                <div class="video-container">
+                    <iframe
+                        src="https://www.youtube-nocookie.com/embed/{{ prayer_song_youtube_id_2 }}"
+                        frameborder="0"
+                        allowfullscreen>
+                    </iframe>
+                </div>
+            </div>
+        {% endif %}
+
+        {% if prayer_song_title_3 and prayer_song_youtube_id_3 %}
+            <div style="text-align: left; margin-top: 10px;">
+                <p><strong>{{ prayer_song_title_3 }}</strong></p>
+
+                <div class="video-container">
+                    <iframe
+                        src="https://www.youtube-nocookie.com/embed/{{ prayer_song_youtube_id_3 }}"
+                        frameborder="0"
+                        allowfullscreen>
+                    </iframe>
+                </div>
+            </div>
+        {% endif %}
+        <p style="margin-top: 15px;"><strong>Prayer:</strong> <span class="person-name">{{ prayer_name }}</span></p>
+        <p style="margin-top: 15px;"><strong>The Gospel Message:</strong> <span class="person-name">{{ gospel_message_name }}</span></p>
+
+        {% if gospel_song_title and gospel_song_youtube_id %}
+        <div style="text-align: left; margin-top: 10px;">
+            <p><strong>{{ gospel_song_title }}</strong></p>
+
+            <div class="video-container">
+                <iframe
+                    src="https://www.youtube-nocookie.com/embed/{{ gospel_song_youtube_id }}"
+                    frameborder="0"
+                    allowfullscreen>
+                </iframe>
+            </div>
+        </div>
+        {% endif %}
+
+        <p style="margin-top: 15px;"><strong>Invitation</strong></p>
+
+        {% if april5_invitation_song %}
+        <div style="text-align: left; margin-top: 15px;">
+            <p><strong>{{ april5_invitation_song.title }}</strong></p>
+
+            <div class="video-container">
+                <iframe
+                    src="https://www.youtube-nocookie.com/embed/{{ april5_invitation_song.id }}"
+                    frameborder="0"
+                    allowfullscreen>
+                </iframe>
+            </div>
+            <p style="margin-top: -24px; margin-bottom: 8px; font-size: 0.95rem;">
+                If video is not apperating above, then press the play button to watch on YouTube.
+            </p>
+            <p style="margin-top: -4px; margin-bottom: 20px;">
+                <a href="https://www.youtube.com/watch?v={{ april5_invitation_song.id }}" target="_blank" rel="noopener noreferrer" style="display: inline-block; padding: 8px 12px; border: 1px solid #2ecc71; border-radius: 8px; text-decoration: none; font-weight: 700;">Play on YouTube</a>
+            </p>
+        </div>
+        {% endif %}
+
+        <p style="margin-top: 25px;"><strong>Closing Prayer:</strong> <span class="person-name">{{ closing_prayer_name }}</span></p>
+            </div>
+        </div>
+    </div>
+
+    <div style="padding-bottom: 80px;">
+        <a href="{{ url_for('index') }}" class="btn-back">
+            ← Back to Newsletter
+        </a>
+    </div>
+
+    <button onclick="window.scrollTo({ top: 0, behavior: 'smooth' });" style="position: fixed; bottom: 20px; right: 20px; background-color: #2ecc71; color: #000000; width: 50px; height: 50px; border-radius: 50%; text-align: center; line-height: 50px; font-size: 24px; border: none; cursor: pointer; box-shadow: 2px 2px 10px rgba(0,0,0,0.5); z-index: 1000;">↑</button>
+</div>
+{% endblock %}

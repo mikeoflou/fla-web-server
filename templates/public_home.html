@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container text-center" style="margin-top: 50px;">
+    <h1 style="color: #2e7d32; font-weight: bold; margin-bottom: 30px;">
+        Welcome to Eastern Heights Baptist Church Newsletter
+    </h1>
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <a href="{{ url_for('worship') }}" class="btn btn-success btn-lg btn-block shadow-sm py-3 mt-4" style="background-color: #2e7d32;">View Order of Worship</a>
+            <a href="{{ url_for('sermons') }}" class="btn btn-success btn-lg btn-block shadow-sm py-3 mt-4" style="background-color: #2e7d32;">Sermon Archive</a>
+            <a href="{{ url_for('announcements') }}" class="btn btn-success btn-lg btn-block shadow-sm py-3 mt-4" style="background-color: #2e7d32;">Church Announcements</a>        
+        </div>
+    </div>
+</div>
+{% endblock %}

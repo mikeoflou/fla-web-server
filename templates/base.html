@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Eastern Heights Baptist Church</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    </head>
+<body>
+    <!-- Hamburger Menu (hidden on index page) -->
+    <nav class="hamburger-nav">
+        <button class="hamburger-btn" id="hamburgerBtn" aria-label="Menu">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+        <div class="hamburger-menu" id="hamburgerMenu">
+            <a href="{{ url_for('index') }}" class="menu-item">🏠 Home</a>
+            <a href="{{ url_for('worship') }}" class="menu-item">✓ Order of Worship</a>
+            <a href="{{ url_for('sermons') }}" class="menu-item">✝ Sermon & Scripture</a>
+            <a href="/blogs" class="menu-item">📰 Blogs</a>
+            <a href="{{ url_for('announcements') }}" class="menu-item">📢 Announcements</a>
+            <a href="{{ url_for('volunteers') }}" class="menu-item">🤝 Volunteers</a>
+            <a href="{{ url_for('contact_page') }}" class="menu-item">📇 Contact</a>
+            <a href="{{ url_for('events_page') }}" class="menu-item">📅 Events</a>
+            <a href="{{ url_for('ministries_page') }}" class="menu-item">⛪ Ministries</a>
+            <a href="{{ url_for('prayer_requests_page') }}" class="menu-item">🙏 Prayer Requests</a>
+            <a href="{{ url_for('senior_adults_page') }}" class="menu-item">👵 Senior Adults</a>
+            {% if is_logged_in %}
+                <a href="{{ url_for('manage_dashboard') }}" class="menu-item">🛠 Manage Dashboard</a>
+                {% if can_manage('worship') %}
+                    <a href="{{ url_for('manage_songs') }}" class="menu-item">📝 Manage Order of Worship</a>
+                {% endif %}
+                {% if can_manage('sermons') %}
+                    <a href="{{ url_for('manage_sermons_page') }}" class="menu-item">✎ Edit Sermons</a>
+                {% endif %}
+                {% if can_manage('announcements') %}
+                    <a href="{{ url_for('manage_announcements') }}" class="menu-item">📢 Manage Announcements</a>
+                {% endif %}
+                {% if can_manage('volunteers') %}
+                    <a href="{{ url_for('manage_volunteers') }}" class="menu-item">🛠 Manage Volunteers</a>
+                {% endif %}
+                {% if can_manage('pages') %}
+                    <a href="{{ url_for('manage_custom_page', slug='contact') }}" class="menu-item">📄 Manage Contact Page</a>
+                    <a href="{{ url_for('manage_events') }}" class="menu-item">&#128197; Manage Events</a>
+                    <a href="{{ url_for('manage_custom_page', slug='ministries') }}" class="menu-item">📄 Manage Ministries Page</a>
+                    <a href="{{ url_for('manage_custom_page', slug='prayer-requests') }}" class="menu-item">📄 Manage Prayer Requests Page</a>
+                    <a href="{{ url_for('manage_custom_page', slug='senior-adults') }}" class="menu-item">📄 Manage Senior Adults Page</a>
+                    <a href="{{ url_for('manage_gallery') }}" class="menu-item">🖼 Manage Gallery</a>
+                    <a href="{{ url_for('manage_home_images') }}" class="menu-item">🏠 Manage Home Ministry Images</a>
+                {% endif %}
+                {% if current_role == 'admin' %}
+                    <a href="{{ url_for('manage_users') }}" class="menu-item">👥 Manage Users</a>
+                {% endif %}
+                <a href="{{ url_for('change_password') }}" class="menu-item">🔒 Change Password</a>
+                <a href="{{ url_for('logout') }}" class="menu-item">🚪 Logout</a>
+            {% else %}
+                <a href="{{ url_for('login') }}" class="menu-item">🔐 Login</a>
+            {% endif %}
+        </div>
+    </nav>
+
+    {% block content %}{% endblock %}
+
+    <script>
+        // Hamburger menu toggle
+        const hamburgerBtn = document.getElementById('hamburgerBtn');
+        const hamburgerMenu = document.getElementById('hamburgerMenu');
+        
+        if (hamburgerBtn) {
+            hamburgerBtn.addEventListener('click', function() {
+                hamburgerMenu.classList.toggle('active');
+            });
+            
+            // Close menu when a link is clicked
+            document.querySelectorAll('.menu-item').forEach(item => {
+                item.addEventListener('click', function() {
+                    hamburgerMenu.classList.remove('active');
+                });
+            });
+        }
+    </script>
+</body>
+</html>

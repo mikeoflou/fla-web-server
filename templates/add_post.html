@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container text-center" style="max-width: 800px; margin-top: 30px;">
+    <h1 style="color: #2e7d32; font-weight: bold;">Create Sermon Entry</h1>
+    <p style="color: #666;">This will appear on the Sermon Archive (Chris) page</p>
+
+    <form method="POST">
+        <table style="width: 100%; border-collapse: separate; border-spacing: 0 15px;">
+            <tr><td><input type="text" name="title" placeholder="Sermon Title" required style="width: 100%; padding: 15px; border-radius: 12px; border: 1px solid #2e7d32; background: #111; color: white;"></td></tr>
+            <tr><td><input type="text" name="pastor" placeholder="Pastor Name" required style="width: 100%; padding: 15px; border-radius: 12px; border: 1px solid #2e7d32; background: #111; color: white;"></td></tr>
+            <tr><td><input type="text" name="date" placeholder="Date (e.g., Oct 27, 2024)" required style="width: 100%; padding: 15px; border-radius: 12px; border: 1px solid #2e7d32; background: #111; color: white;"></td></tr>
+            
+            <tr><td><input type="text" name="video_url" placeholder="YouTube URL (Paste the full link here)" style="width: 100%; padding: 15px; border-radius: 12px; border: 1px solid #2e7d32; background: #111; color: white;"></td></tr>
+            <tr><td><input type="text" name="scripture" placeholder="Scripture Reference (e.g., John 3:16-17)" style="width: 100%; padding: 15px; border-radius: 12px; border: 1px solid #2e7d32; background: #111; color: white;"></td></tr>
+            
+            <tr><td><textarea name="bible_text" placeholder="Paste the full Scripture text here..." style="width: 100%; padding: 15px; border-radius: 12px; border: 1px solid #2e7d32; background: #111; color: white; height: 120px;"></textarea></td></tr>
+            <tr><td><textarea name="content" placeholder="Sermon Outline / Notes..." style="width: 100%; padding: 15px; border-radius: 12px; border: 1px solid #2e7d32; background: #111; color: white; height: 200px;"></textarea></td></tr>
+            
+            <tr>
+                <td>
+                    <button type="submit" style="width: 100%; background-color: #2e7d32; color: #000; font-weight: bold; padding: 20px; border-radius: 12px; border: none; font-size: 1.2rem; cursor: pointer;">
+                        Save and Publish Sermon
+                    </button>
+                </td>
+            </tr>
+        </table>
+    </form>
+    <a href="{{ url_for('admin_panel') }}" style="color: #666; text-decoration: none;">← Back to Admin</a>
+</div>
+{% endblock %}

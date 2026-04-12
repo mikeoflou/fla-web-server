@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container text-center" style="margin-top: 30px; background-color: transparent !important;">
+    <h1 style="color: #2e7d32; font-weight: bold; margin-bottom: 5px;">Welcome, {{ name }}</h1>
+    <p style="color: #666; margin-bottom: 30px;">Admin Control Panel</p>
+
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            
+            <table style="width: 100%; border-collapse: separate; border-spacing: 0 20px; margin: 0 auto;">
+                <tr>
+                    <td>
+                        <a href="{{ url_for('add_post') }}" 
+                           style="background-color: #2e7d32 !important; color: #000000 !important; font-weight: bold; padding: 20px; border-radius: 12px; display: block; text-decoration: none; font-size: 1.2rem; border: none; text-align: center;">
+                            Create New Sermon Entry (Chris)
+                        </a>
+                    </td>
+                </tr>
+                
+                <tr>
+                    <td>
+                        <a href="{{ url_for('manage_music') }}" 
+                           style="background-color: #2e7d32 !important; color: #000000 !important; font-weight: bold; padding: 20px; border-radius: 12px; display: block; text-decoration: none; font-size: 1.2rem; border: none; text-align: center;">
+                            Manage Order of Worship (Jason)
+                        </a>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <a href="{{ url_for('manage_announcements') }}" 
+                           style="background-color: #2e7d32 !important; color: #000000 !important; font-weight: bold; padding: 20px; border-radius: 12px; display: block; text-decoration: none; font-size: 1.2rem; border: none; text-align: center;">
+                            Manage Church Announcements
+                        </a>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <a href="{{ url_for('Landing') }}" 
+                           style="background-color: #1b5e20 !important; color: #ffffff !important; font-weight: bold; padding: 20px; border-radius: 12px; display: block; text-decoration: none; font-size: 1.2rem; border: none; text-align: center;">
+                            View Public Newsletter
+                        </a>
+                    </td>
+                </tr>
+            </table>
+
+        </div>
+    </div>
+</div>
+{% endblock %}

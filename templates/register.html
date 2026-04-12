@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-5">
+            <div class="login-container p-4 shadow">
+                <h2 class="text-center mb-4">Create Account</h2>
+                
+                <form method="POST">
+                    <div class="form-group">                    
+                        <label class="text-green">Admin Key (Optional)</label>
+                        <input type="password" name="superuser_key" class="form-control bg-dark text-white border-success" placeholder="Enter key for Superuser access">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Username</label>
+                        <input type="text" name="username" class="form-control" placeholder="Enter username" required>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label">Password</label>
+                        <input type="password" name="password" class="form-control" placeholder="Enter password" required>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label">4-Digit PIN</label>
+                        <input type="password" name="pin" class="form-control" maxlength="4" placeholder="0000" required>
+                        <div class="form-text text-muted">Use a PIN you'll remember (like your computer PIN).</div>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary w-100 mt-3">Register Account</button>
+                </form>
+
+                <div class="mt-4 text-center">
+                    <p class="mb-0">Already have an account?</p>
+                    <a href="{{ url_for('login') }}" class="btn btn-outline-light btn-sm mt-2">Back to Login</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

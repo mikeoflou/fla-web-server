@@ -1,0 +1,202 @@
+/* 1. FORCE BLACK BACKGROUND EVERYWHERE */
+body, html {
+    background-color: #000000 !important;
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+}
+
+/* 2. THE GREEN FORCE (Big, Green, Readable) */
+* {
+    color: #2ecc71 !important;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* 3. HEADERS & CHURCH NAME */
+h1 {
+    font-size: 3.2rem !important;
+    text-transform: uppercase;
+    margin: 20px 0 5px 0;
+    text-align: center;
+}
+
+.church-name {
+    color: #2ecc71 !important; 
+    font-size: 1.8rem !important; 
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 30px;
+    display: block;
+}
+
+/* 4. THE MAIN CONTENT BOX */
+.worship-box {
+    max-width: 500px;
+    margin: 0 auto;
+    border: 2px solid #2ecc71;
+    padding: 30px;
+    border-radius: 20px;
+    background-color: #000000 !important;
+}
+
+.worship-columns {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 16px;
+}
+
+.worship-column {
+    border: 1px solid #2ecc71;
+    border-radius: 14px;
+    padding: 16px;
+}
+
+.worship-column-title {
+    margin: 0 0 14px 0;
+    text-align: center;
+    font-size: 1.4rem;
+    color: #2ecc71;
+    letter-spacing: 0.5px;
+}
+
+strong {
+    font-size: 1.6rem !important;
+    display: block;
+    margin-bottom: 8px;
+}
+
+.person-name {
+    font-size: 2rem !important;
+    font-weight: 700;
+    display: inline-block;
+    margin-top: 4px;
+}
+
+hr {
+    border: 0;
+    border-top: 1px solid #333;
+    margin: 25px 0;
+}
+
+/* 5. VIDEO SPACING & BORDERS */
+.video-container {
+    position: relative; 
+    padding-bottom: 56.25%; 
+    height: 0; 
+    overflow: hidden; 
+    border-radius: 15px; 
+    border: 2px solid #2ecc71;
+    margin-bottom: 40px;
+}
+
+.video-container iframe {
+    position: absolute; 
+    top: 0; 
+    left: 0; 
+    width: 100%; 
+    height: 100%;
+}
+
+/* 6. THE BACK BUTTON */
+.btn-back {
+    text-decoration: none;
+    border: 2px solid #2ecc71;
+    padding: 15px 30px;
+    border-radius: 12px;
+    display: inline-block;
+    font-size: 1.3rem;
+    font-weight: bold;
+    margin-top: 40px;
+}
+
+/* 7. HAMBURGER MENU */
+.hamburger-nav {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1000;
+}
+
+.hamburger-nav::after {
+    content: "";
+    display: block;
+    width: 50px;
+    margin: 10px 0 0 auto;
+    border-top: 1px solid #333;
+}
+
+.hamburger-btn {
+    background: #2ecc71;
+    border: none;
+    width: 50px;
+    height: 50px;
+    cursor: pointer;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 6px;
+    padding: 0;
+}
+
+.hamburger-btn span {
+    display: block;
+    width: 30px;
+    height: 3px;
+    background: #000000;
+    border-radius: 2px;
+    transition: all 0.3s ease;
+}
+
+.hamburger-btn:hover {
+    background: #1aa348;
+}
+
+.hamburger-menu {
+    position: absolute;
+    top: 70px;
+    right: 0;
+    background: #1a1a1a;
+    border: none;
+    border-radius: 8px;
+    width: min(500px, 92vw);
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px;
+}
+
+.hamburger-menu.active {
+    max-height: 75vh;
+    padding: 6px 0;
+    border: 2px solid #2ecc71;
+    overflow-y: auto;
+}
+
+.menu-item {
+    padding: 10px 14px;
+    color: #2ecc71 !important;
+    text-decoration: none;
+    font-size: 0.98rem;
+    line-height: 1.25;
+    transition: background 0.2s;
+    display: block;
+}
+
+.menu-item:hover {
+    background: #2a2a2a;
+    color: #1aa348 !important;
+}
+
+@media (max-width: 768px) {
+    .hamburger-menu {
+        grid-template-columns: 1fr;
+    }
+
+    .worship-column {
+        padding: 12px;
+    }
+}

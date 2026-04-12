@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <div class="about-card shadow-lg">
+        <h1 style="color: #00d4ff;">About Me</h1>
+        
+        <p>My name is <strong>Mike Polston</strong>, and I am a software developer.</p>
+        
+        <p>I have a passion for creating web applications and learning new technologies. 
+        I am a full stack web developer, building clean, 
+        responsive interfaces as well as backend development using HTML, CSS, PHP, SQL, MYSQL, SQLLITE3, 
+        FLASK and BOOTSTRAP.</p>
+        
+        <p>When I'm not coding, you can find me exploring the latest in AI and web design.</p>
+
+        <div class="mt-4">
+            <a href="{{ url_for('blogs') }}" class="btn btn-outline-info">
+                ← Back to Blog List
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}

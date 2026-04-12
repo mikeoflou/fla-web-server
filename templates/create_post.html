@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="content-section">
+    <form method="POST" action="">
+        {{ form.hidden_tag() }}
+        <fieldset class="form-group">
+<legend class="border-bottom mb-4 text-green">{{ title }}</legend>            <div class="form-group">
+                {{ form.title.label(class="form-control-label") }}
+                {{ form.title(class="form-control form-control-lg") }}
+            </div>
+            <div class="form-group">
+                {{ form.sermon_link.label(class="form-control-label text-green") }}
+                {{ form.sermon_link(class="form-control") }}
+            </div>
+            <div class="form-group">
+                {{ form.scripture.label(class="form-control-label text-green") }}
+                {{ form.scripture(class="form-control") }}
+            </div>
+            <div class="form-group">
+                {{ form.bible_text.label(class="form-control-label text-green") }}
+                {{ form.bible_text(class="form-control", rows="5") }}
+            </div>
+            <div class="form-group">
+                {{ form.content.label(class="form-control-label text-green") }}
+                {{ form.content(class="form-control", rows="10") }}
+            </div>
+        </fieldset>
+        <div class="form-group">
+    {{ form.submit(class="btn btn-outline-success", value="Update Sermon" if title == 'Update Post' else "Post Sermon") }}
+</div>
+    </form>
+</div>
+{% endblock content %}

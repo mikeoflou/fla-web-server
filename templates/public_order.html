@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container mt-4" style="color: white; background: #121212; min-height: 100vh; padding: 25px; border-radius: 15px;">
+    <div style="text-align: center; margin-bottom: 30px;">
+        <a href="{{ url_for('worship') }}"><strong style="color: #2ecc71; display: block; margin-bottom: 10px;">Jason - Music Ministry</strong></a>
+        <img src="{{ url_for('static', filename='images/gallery/music_ministry.jpg') }}" alt="Music Ministry - Jason" style="width: 100%; max-width: 400px; height: auto; border-radius: 10px; border: 2px solid #2ecc71;" onerror="this.style.display='none';">
+    </div>
+
+    
+    <div id="videoSection" style="display:none;" class="mb-4 p-3 border border-info rounded bg-black">
+        <h4 id="nowPlayingTitle" class="text-info">Now Playing</h4>
+        <div class="embed-responsive embed-responsive-16by9">
+            <iframe id="mainIframe" class="embed-responsive-item" src="" allowfullscreen></iframe>
+        </div>
+        <button class="btn btn-sm btn-outline-light mt-2" onclick="closePlayer()">Close Player</button>
+    </div>
+
+    <div class="text-center mb-4 border-bottom pb-3">
+        <h2 class="text-primary font-weight-bold">Order of Worship</h2>
+        <p class="text-muted">Welcome to our service</p>
+    </div>
+
+    <div class="list-group mb-5">
+        {% for song in songs %}
+        <div class="list-group-item bg-dark border-secondary d-flex justify-content-between align-items-center mb-2">
+            <span class="h5 {{ 'text-info' if song.id != 'NONE' else 'text-white' }}">
+                {{ loop.index }}. {{ song.title }}
+            </span>
+            
+            {% if song.id != "NONE" %}
+                <button class="btn btn-info px-4" onclick="playMe('{{ song.id }}', '{{ song.title }}')">Play</button>
+            {% endif %}
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<script>
+function playMe(id, title) {
+    document.getElementById('videoSection').style.display = 'block';
+    document.getElementById('mainIframe').src = "https://www.youtube.com/embed/" + id + "?autoplay=1";
+    document.getElementById('nowPlayingTitle').innerText = title;
+    window.scrollTo({top: 0, behavior: 'smooth'});
+}
+function closePlayer() {
+    document.getElementById('videoSection').style.display = 'none';
+    document.getElementById('mainIframe').src = "";
+}
+</script>
+{% endblock content %}

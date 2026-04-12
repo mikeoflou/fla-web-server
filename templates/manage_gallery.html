@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div style="padding: 20px; max-width: 1100px; margin: 30px auto;">
+    <h2 style="text-align: center;">Manage Gallery</h2>
+
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <div style="background: #102e17; border: 1px solid #2ecc71; border-radius: 6px; padding: 10px; margin-bottom: 15px; color: #b8f5c9;">
+                {% for message in messages %}
+                    <div>{{ message }}</div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endwith %}
+
+    <form method="POST" action="{{ url_for('manage_gallery') }}" enctype="multipart/form-data" style="background:#000; border:2px solid #2ecc71; border-radius:10px; padding:20px; margin-bottom:20px; display:grid; gap:12px;">
+        <div>
+            <label><strong>Select Images (multiple allowed)</strong></label><br>
+            <input type="file" name="images" accept=".png,.jpg,.jpeg,.gif,.webp" multiple required style="width:100%; padding:8px; border:1px solid #2ecc71; border-radius:4px; background:#000; color:#2ecc71;">
+        </div>
+        <div>
+            <label><strong>Name (optional, applied to all selected)</strong></label><br>
+            <input type="text" name="name" placeholder="Jason Shaw" style="width:100%; padding:8px; border:1px solid #2ecc71; border-radius:4px; background:#000; color:#2ecc71;">
+        </div>
+        <div>
+            <label><strong>Title (optional, applied to all selected)</strong></label><br>
+            <input type="text" name="title" placeholder="Closing Prayer" style="width:100%; padding:8px; border:1px solid #2ecc71; border-radius:4px; background:#000; color:#2ecc71;">
+        </div>
+        <div>
+            <button type="submit" style="background:#1f6f3a; color:#fff; border:none; border-radius:6px; padding:10px 14px; font-weight:bold; cursor:pointer;">Upload Images</button>
+            <a href="{{ url_for('gallery_page') }}" style="display:inline-block; margin-left:10px; background:#222; color:#2ecc71; border:1px solid #2ecc71; border-radius:6px; padding:10px 14px; text-decoration:none; font-weight:bold;">View Public Gallery</a>
+        </div>
+    </form>
+
+    {% if images %}
+    <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap:16px;">
+        {% for image in images %}
+        <div style="background:#000; border:2px solid #2ecc71; border-radius:10px; overflow:hidden;">
+            <div style="padding:10px 10px 6px 10px; font-size:1rem; font-weight:700; color:#2ecc71;">{{ image.display_name }}</div>
+            <img src="{{ url_for('static', filename='images/gallery/' + image.filename) }}" alt="Gallery image" style="width:100%; height:170px; object-fit:cover; display:block;">
+            <div style="padding:8px 10px 0 10px; font-size:0.95rem; color:#c8f8d9;">{{ image.display_title or 'No title yet.' }}</div>
+            <div style="padding:10px;">
+                <form method="POST" action="{{ url_for('update_gallery_image', image_id=image.id) }}" style="margin-bottom:8px;">
+                    <label style="display:block; margin-bottom:4px;"><strong>Edit Name</strong></label>
+                    <input type="text" name="name" value="{{ image.display_name }}" placeholder="Name shown above image" style="width:100%; padding:8px; border:1px solid #2ecc71; border-radius:4px; background:#000; color:#2ecc71; margin-bottom:8px;">
+                    <label style="display:block; margin-bottom:4px;"><strong>Edit Title</strong></label>
+                    <input type="text" name="title" value="{{ image.display_title }}" placeholder="Title shown under image" style="width:100%; padding:8px; border:1px solid #2ecc71; border-radius:4px; background:#000; color:#2ecc71; margin-bottom:8px;">
+                    <button type="submit" style="background:#1f6f3a; color:#fff; border:none; border-radius:4px; padding:7px 10px; cursor:pointer;">Save Name + Title</button>
+                </form>
+                <div style="font-size:0.85rem; color:#8fd7aa; margin-bottom:8px;">Uploaded: {{ image.date_uploaded }}</div>
+                <form method="POST" action="{{ url_for('delete_gallery_image', image_id=image.id) }}" onsubmit="return confirm('Delete this image?');">
+                    <button type="submit" style="background:#dc3545; color:#fff; border:none; border-radius:4px; padding:8px 10px; cursor:pointer;">Delete</button>
+                </form>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div style="text-align:center; border:2px dashed #2ecc71; border-radius:10px; padding:20px;">No gallery images uploaded yet.</div>
+    {% endif %}
+</div>
+{% endblock %}

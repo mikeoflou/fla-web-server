@@ -1,0 +1,111 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div style="padding: 20px; max-width: 900px; margin: 30px auto;">
+    <h2 style="color: #2ecc71; text-align: center; margin: 0 0 24px 0;">Manage Events</h2>
+
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        <div style="background: #1a5f1a; border: 1px solid #2ecc71; border-radius: 6px; padding: 10px; margin-bottom: 20px; color: #9adfaa;">
+            {% for msg in messages %}<div>{{ msg }}</div>{% endfor %}
+        </div>
+        {% endif %}
+    {% endwith %}
+
+    {# Add New Event Form #}
+    <div style="background: #1a5f1a; padding: 20px; border-radius: 8px; border: 2px solid #2ecc71; margin-bottom: 36px;">
+        <h3 style="color: #2ecc71; margin: 0 0 16px 0;">Add New Event</h3>
+        <form method="POST" action="{{ url_for('add_event') }}" enctype="multipart/form-data" style="display: flex; flex-direction: column; gap: 12px;">
+
+            <input type="text" name="title" placeholder="Event Title *" required
+                   style="padding: 9px; border: 1px solid #2ecc71; border-radius: 4px; background: #000; color: #2ecc71;">
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+                <input type="text" name="date" placeholder="Date (e.g. April 12, 2026)"
+                       style="padding: 9px; border: 1px solid #2ecc71; border-radius: 4px; background: #000; color: #2ecc71;">
+                <input type="text" name="time" placeholder="Time (e.g. 10:30 AM)"
+                       style="padding: 9px; border: 1px solid #2ecc71; border-radius: 4px; background: #000; color: #2ecc71;">
+            </div>
+
+            <input type="text" name="location" placeholder="Location (e.g. Main Sanctuary)"
+                   style="padding: 9px; border: 1px solid #2ecc71; border-radius: 4px; background: #000; color: #2ecc71;">
+
+            <textarea name="description" placeholder="Full event description..." rows="4"
+                      style="padding: 9px; border: 1px solid #2ecc71; border-radius: 4px; background: #000; color: #2ecc71; resize: vertical;"></textarea>
+
+            <div>
+                <label style="color: #9adfaa; font-size: 0.9rem; display: block; margin-bottom: 4px;">Hero Image (main card photo)</label>
+                <input type="file" name="hero_image" accept="image/*"
+                       style="color: #9adfaa; font-size: 0.9rem;">
+            </div>
+
+            <div>
+                <label style="color: #9adfaa; font-size: 0.9rem; display: block; margin-bottom: 6px;">Gallery Photos (up to 3)</label>
+                <div style="display: flex; flex-direction: column; gap: 6px;">
+                    <input type="file" name="gallery_0" accept="image/*" style="color: #9adfaa; font-size: 0.9rem;">
+                    <input type="file" name="gallery_1" accept="image/*" style="color: #9adfaa; font-size: 0.9rem;">
+                    <input type="file" name="gallery_2" accept="image/*" style="color: #9adfaa; font-size: 0.9rem;">
+                </div>
+            </div>
+
+            <button type="submit"
+                    style="background: #1f6f3a; color: #fff; padding: 12px 20px; border: none; border-radius: 4px; cursor: pointer; font-weight: bold; font-size: 1rem; text-transform: uppercase; letter-spacing: 1px;">
+                Add Event
+            </button>
+        </form>
+    </div>
+
+    {# Event List #}
+    <h3 style="color: #2ecc71; margin: 0 0 16px 0;">All Events ({{ events|length }})</h3>
+
+    {% if events %}
+    <div style="display: flex; flex-direction: column; gap: 14px;">
+        {% for event in events %}
+        <div style="border: 2px solid #2ecc71; border-radius: 8px; padding: 14px; background: #000; display: flex; gap: 16px; align-items: flex-start;">
+
+            {% if event.hero_image %}
+            <img src="{{ url_for('static', filename='images/events/' + event.hero_image) }}"
+                 alt="{{ event.title }}"
+                 style="width: 90px; height: 70px; object-fit: cover; border-radius: 6px; border: 1px solid #2ecc71; flex-shrink: 0;"
+                 onerror="this.style.display='none';">
+            {% else %}
+            <div style="width: 90px; height: 70px; background: #1a5f1a; border-radius: 6px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                <span style="font-size: 1.8rem;">&#128197;</span>
+            </div>
+            {% endif %}
+
+            <div style="flex: 1; min-width: 0;">
+                <h4 style="color: #2ecc71; margin: 0 0 4px 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{ event.title }}</h4>
+                <div style="color: #9adfaa; font-size: 0.85rem; margin-bottom: 4px;">
+                    {% if event.date %}{{ event.date }}{% endif %}
+                    {% if event.time %} &bull; {{ event.time }}{% endif %}
+                    {% if event.location %} &bull; {{ event.location }}{% endif %}
+                </div>
+                {% if event.description %}
+                <p style="color: #888; font-size: 0.85rem; margin: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{ event.description[:80] }}</p>
+                {% endif %}
+            </div>
+
+            <div style="display: flex; gap: 8px; flex-shrink: 0;">
+                <a href="{{ url_for('edit_event', event_id=event.id) }}"
+                   style="background: #1f6f3a; color: #fff; padding: 6px 14px; border-radius: 4px; text-decoration: none; font-size: 0.9rem;">Edit</a>
+                <form action="{{ url_for('delete_event', event_id=event.id) }}" method="POST" style="display:inline;">
+                    <input type="submit" value="Delete"
+                           style="background: #dc3545; color: #fff; padding: 6px 14px; border: none; border-radius: 4px; cursor: pointer; font-size: 0.9rem;"
+                           onclick="return confirm('Delete \'{{ event.title }}\'?');">
+                </form>
+            </div>
+
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <p style="color: #888;">No events yet. Add one using the form above.</p>
+    {% endif %}
+
+    <div style="margin-top: 28px; text-align: center;">
+        <a href="{{ url_for('events_page') }}" style="color: #2ecc71; text-decoration: none; font-size: 0.95rem;">&larr; View Public Events Page</a>
+    </div>
+
+</div>
+{% endblock %}

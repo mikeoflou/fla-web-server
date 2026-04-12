@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div style="padding: 20px; max-width: 800px; margin: 0 auto;">
+    <h2>Manage Order of Worship</h2>
+
+    <div style="background: #000000; padding: 20px; border-radius: 8px; margin-bottom: 30px; border: 2px solid #2ecc71;">
+        <h3 style="color: #2ecc71; margin-top: 0;">Worship Roles</h3>
+        <form method="POST" action="{{ url_for('update_worship_settings') }}" style="display: flex; flex-direction: column; gap: 12px;">
+            <div>
+                <label><strong>Announcements / Opening Prayer:</strong></label><br>
+                <input type="text" name="opening_prayer_name" value="{{ settings.opening_prayer_name }}" required style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;">
+            </div>
+
+            <div>
+                <label><strong>Message:</strong></label><br>
+                <input type="text" name="message_name" value="{{ settings.message_name }}" required style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;">
+            </div>
+
+            <div>
+                <label><strong>Closing:</strong></label><br>
+                <input type="text" name="closing_name" value="{{ settings.closing_name }}" required style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;">
+            </div>
+
+            <button type="submit" style="background: #1f6f3a; color: #ffffff; padding: 10px 20px; border: none; border-radius: 4px; cursor: pointer; font-weight: bold; width: fit-content;">Save Order of Worship</button>
+        </form>
+    </div>
+
+    <div style="background: #1a5f1a; padding: 16px; border-radius: 8px; border: 2px solid #2ecc71;">
+        <p style="margin: 0 0 10px 0; color: #d5f5de;">Need to edit the song list too?</p>
+        <a href="{{ url_for('manage_songs') }}" style="display: inline-block; background: #1f6f3a; color: #ffffff; padding: 8px 14px; border-radius: 4px; text-decoration: none; font-weight: bold;">Go to Manage Songs</a>
+    </div>
+</div>
+{% endblock %}

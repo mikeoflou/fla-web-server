@@ -1,0 +1,17 @@
+[
+  {
+    "username": "admin",
+    "password": "2026January",
+    "role": "admin"
+  },
+  {
+    "username": "Jason",
+    "password": "Jason123",
+    "role": "order"
+  },
+  {
+    "username": "Chris",
+    "password": "Chris123",
+    "role": "sermons"
+  }
+]

@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div style="padding: 20px; max-width: 800px; margin: 30px auto;">
+    <h2 style="text-align: center;">Manage Dashboard</h2>
+    <p style="text-align: center; color: #9adfaa;">Signed in as <strong>{{ current_username }}</strong> ({{ current_role }})</p>
+
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <div style="background: #3a1010; border: 1px solid #dc3545; border-radius: 6px; padding: 10px; margin-bottom: 15px; color: #ffb3b3;">
+                {% for message in messages %}
+                    <div>{{ message }}</div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endwith %}
+
+    <div style="display: grid; grid-template-columns: 1fr; gap: 12px;">
+        <a href="{{ url_for('change_password') }}" style="display:block; text-decoration:none; border:2px solid #2ecc71; border-radius:8px; padding:14px; background:#000;">🔒 Change Password</a>
+        {% if can_manage('worship') %}
+            <a href="{{ url_for('manage_songs') }}" style="display:block; text-decoration:none; border:2px solid #2ecc71; border-radius:8px; padding:14px; background:#000;">📝 Manage Order of Worship</a>
+        {% endif %}
+        {% if can_manage('sermons') %}
+            <a href="{{ url_for('manage_sermons_page') }}" style="display:block; text-decoration:none; border:2px solid #2ecc71; border-radius:8px; padding:14px; background:#000;">✎ Manage Sermons</a>
+        {% endif %}
+        {% if can_manage('announcements') %}
+            <a href="{{ url_for('manage_announcements') }}" style="display:block; text-decoration:none; border:2px solid #2ecc71; border-radius:8px; padding:14px; background:#000;">📢 Manage Announcements</a>
+        {% endif %}
+        {% if can_manage('volunteers') %}
+            <a href="{{ url_for('manage_volunteers') }}" style="display:block; text-decoration:none; border:2px solid #2ecc71; border-radius:8px; padding:14px; background:#000;">🛠 Manage Volunteers</a>
+        {% endif %}
+        {% if can_manage('pages') %}
+            <a href="{{ url_for('manage_custom_page', slug='contact') }}" style="display:block; text-decoration:none; border:2px solid #2ecc71; border-radius:8px; padding:14px; background:#000;">📄 Manage Contact Page</a>
+            <a href="{{ url_for('manage_events') }}" style="display:block; text-decoration:none; border:2px solid #2ecc71; border-radius:8px; padding:14px; background:#000;">&#128197; Manage Events</a>
+            <a href="{{ url_for('manage_custom_page', slug='ministries') }}" style="display:block; text-decoration:none; border:2px solid #2ecc71; border-radius:8px; padding:14px; background:#000;">📄 Manage Ministries Page</a>
+            <a href="{{ url_for('manage_custom_page', slug='prayer-requests') }}" style="display:block; text-decoration:none; border:2px solid #2ecc71; border-radius:8px; padding:14px; background:#000;">📄 Manage Prayer Requests Page</a>
+            <a href="{{ url_for('manage_custom_page', slug='senior-adults') }}" style="display:block; text-decoration:none; border:2px solid #2ecc71; border-radius:8px; padding:14px; background:#000;">📄 Manage Senior Adults Page</a>
+            <a href="{{ url_for('manage_gallery') }}" style="display:block; text-decoration:none; border:2px solid #2ecc71; border-radius:8px; padding:14px; background:#000;">🖼 Manage Gallery</a>
+            <a href="{{ url_for('manage_home_images') }}" style="display:block; text-decoration:none; border:2px solid #2ecc71; border-radius:8px; padding:14px; background:#000;">🏠 Manage Home Ministry Images</a>
+        {% endif %}
+        {% if current_role == 'admin' %}
+            <a href="{{ url_for('manage_users') }}" style="display:block; text-decoration:none; border:2px solid #2ecc71; border-radius:8px; padding:14px; background:#000;">👥 Manage Users</a>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

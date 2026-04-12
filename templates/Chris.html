@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div style="height: 70px;"></div> 
+
+<div style="padding: 20px; max-width: 900px; margin: 0 auto;">
+
+{% if posts %}
+    <div style="text-align: center; margin-bottom: 30px;">
+        <a href="{{ url_for('sermons') }}"><strong style="color: #2ecc71; display: block; margin-bottom: 10px;">Scripture and Sermon</strong></a>
+        <img src="{{ url_for('static', filename='images/gallery/scripture_and_sermon.jpg') }}" alt="Scripture and Sermon" style="width: 100%; max-width: 400px; height: auto; border-radius: 10px; border: 2px solid #2ecc71;" onerror="this.style.display='none';">
+    </div>
+
+    <h1 style="text-align: center; color: #2ecc71; margin-bottom: 10px;">{{ posts[0].title }}</h1>
+{% else %}
+    <div style="text-align: center; margin-bottom: 30px;">
+        <a href="{{ url_for('sermons') }}"><strong style="color: #2ecc71; display: block; margin-bottom: 10px;">Scripture and Sermon</strong></a>
+        <img src="{{ url_for('static', filename='images/gallery/scripture_and_sermon.jpg') }}" alt="Scripture and Sermon" style="width: 100%; max-width: 400px; height: auto; border-radius: 10px; border: 2px solid #2ecc71;" onerror="this.style.display='none';">
+    </div>
+
+    <h1 style="text-align: center; color: #2ecc71; margin-bottom: 10px;">Upcoming Worship Service</h1>
+{% endif %}
+
+<h3 style="text-align: center; color: #2ecc71; margin-bottom: 30px;">Scripture and Outline</h3>
+
+{% for post in posts %}
+    <article style="border: 2px solid #2ecc71; border-radius: 15px; padding: 30px; background-color: #000000; color: white; margin-bottom: 30px;">
+        
+        {% if post.video_url %}
+            <div style="margin-bottom: 30px;">
+                <h5 style="color: #2ecc71; margin-top: 0;">Watch Previous Worship Service</h5>
+                <div style="border: 1px solid #2ecc71; border-radius: 8px; overflow: hidden; position: relative; padding-bottom: 56.25%; height: 0;">
+                    <iframe style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none;" src="{{ post.video_url }}" allowfullscreen></iframe>
+                </div>
+            </div>
+        {% endif %}
+
+        {% if post.bible_text %}
+            <div style="background-color: #1a1a1a; border-radius: 10px; border-left: 5px solid #2ecc71; padding: 20px; margin-bottom: 30px;">
+                <h5 style="color: #2ecc71; text-transform: uppercase; letter-spacing: 1px; margin-top: 0;">
+                    Scripture Reading: {{ post.scripture }}
+                </h5>
+                <p style="font-size: 1.1rem; line-height: 1.8; font-style: italic; color: #e0e0e0; white-space: pre-wrap; margin: 0;">
+                    {{ post.bible_text }}
+                </p>
+                {% if post.scripture_link %}
+                    <p style="margin-top: 15px; margin-bottom: 0;">
+                        <a href="{{ post.scripture_link }}" target="_blank" style="color: #2ecc71; text-decoration: underline; cursor: pointer;">Read full chapter</a>
+                    </p>
+                {% endif %}
+            </div>
+        {% endif %}
+
+        <hr style="border: 0; border-top: 1px solid #444; margin: 30px 0;">
+
+        <div style="margin-top: 30px;">
+            <textarea style="white-space: pre-wrap; line-height: 1.8; font-size: 1.1rem; color: #e0e0e0; background-color: #1a1a1a; border-radius: 10px; border-left: 5px solid #2ecc71; padding: 20px; width: 100%; min-height: 300px; font-family: inherit; resize: vertical;">{{ post.content }}</textarea>
+        </div>
+
+        </article>
+{% endfor %}
+
+{% if not posts %}
+    <div style="text-align: center; padding: 40px; color: #888;">
+        <p>No sermons available.</p>
+        <a href="{{ url_for('manage_sermons_page') }}" style="background: #2ecc71; color: #000000; padding: 10px 20px; border-radius: 4px; text-decoration: none; font-weight: bold; display: inline-block;">Add a Sermon</a>
+    </div>
+{% endif %}
+
+<button onclick="window.scrollTo(0, 0);" style="position: fixed; bottom: 20px; right: 20px; background-color: #2ecc71; color: #000000; width: 50px; height: 50px; border-radius: 50%; text-align: center; line-height: 50px; font-size: 24px; border: none; cursor: pointer; box-shadow: 2px 2px 10px rgba(0,0,0,0.5); z-index: 1000;">↑</button>
+  
+</div>
+{% endblock content %}

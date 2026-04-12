@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+
+{% block title %}Weekly Newsletter{% endblock %}
+
+{% block content %}
+<div style="padding: 20px; max-width: 900px; margin: 0 auto;">
+    <h1 style="text-align: center; color: #2ecc71; font-size: 2.5rem; margin-bottom: 20px;">Eastern Heights Baptist Church</h1>
+
+        <div style="margin-bottom: 40px; text-align: center;">
+            <img src="{{ url_for('static', filename='images/church_exterior.jpg') }}" alt="Eastern Heights Baptist Church" style="width: 100%; max-width: 600px; height: auto; border-radius: 10px; border: 2px solid #2ecc71;" onerror="this.style.display='none';">
+        </div>
+
+        <div style="text-align: center; margin-bottom: 30px;">
+            <p style="color: #e0e0e0; font-size: 1.1rem; line-height: 1.8;">
+                Welcome to Eastern Heights Baptist Church. We are a community of believers dedicated to serving God and our neighbors. 
+                Join us as we worship together, grow in faith, and make a difference in our community.
+            </p>
+        </div>
+
+        <div style="background: #1a1a1a; border: 2px solid #2ecc71; border-radius: 10px; padding: 30px; margin-bottom: 20px;">
+            <h2 style="color: #2ecc71; text-align: center; margin-top: 0; font-size: 1.2rem;">Explore Our Ministry</h2>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px;">
+                <div style="text-align: center;">
+                    <p style="color: #e0e0e0;"><a href="{{ url_for('announcements') }}" style="color: #2ecc71; text-decoration: none; font-size: 1.1rem;"><strong>📢 Announcements</strong></a></p>
+                </div>
+                <div style="text-align: center;">
+                    <p style="color: #e0e0e0;"><a href="{{ url_for('worship') }}" style="color: #2ecc71; text-decoration: none; font-size: 1.1rem;"><strong>🎵 Order of Worship</strong></a></p>
+                </div>
+                <div style="text-align: center;">
+                    <p style="color: #e0e0e0;"><a href="{{ url_for('sermons') }}" style="color: #2ecc71; text-decoration: none; font-size: 1.1rem;"><strong>✝ Scripture & Sermon</strong></a></p>
+                </div>
+                <div style="text-align: center;">
+                    <p style="color: #e0e0e0;"><a href="{{ url_for('volunteers') }}" style="color: #2ecc71; text-decoration: none; font-size: 1.1rem;"><strong>🤝 Volunteers</strong></a></p>
+                </div>
+            </div>
+        </div>
+
+        <ul style="line-height: 1.7; list-style: none; padding-left: 0; font-size: 1rem;">
+        {% if is_logged_in %}
+              <li><strong><a href="{{ url_for('manage_dashboard') }}" style="color: #ff6b6b; text-decoration: none;">🛠 Manage Dashboard</a></strong></li>
+            {% if can_manage('worship') %}
+                <li><strong><a href="{{ url_for('manage_songs') }}" style="color: #ff6b6b; text-decoration: none;">📝 Manage Order of Worship</a></strong></li>
+            {% endif %}
+            {% if can_manage('sermons') %}
+                <li><strong><a href="{{ url_for('manage_sermons_page') }}" style="color: #ff6b6b; text-decoration: none;">✎ Edit Sermons</a></strong></li>
+            {% endif %}
+            {% if can_manage('announcements') %}
+                <li><strong><a href="{{ url_for('manage_announcements') }}" style="color: #ff6b6b; text-decoration: none;">📢 Manage Announcements</a></strong></li>
+            {% endif %}
+            {% if can_manage('volunteers') %}
+                <li><strong><a href="{{ url_for('manage_volunteers') }}" style="color: #ff6b6b; text-decoration: none;">🛠 Manage Volunteers</a></strong></li>
+            {% endif %}
+            {% if can_manage('pages') %}
+                <li><strong><a href="{{ url_for('manage_custom_page', slug='contact') }}" style="color: #ff6b6b; text-decoration: none;">📄 Manage Contact Page</a></strong></li>
+                <li><strong><a href="{{ url_for('manage_events') }}" style="color: #ff6b6b; text-decoration: none;">&#128197; Manage Events</a></strong></li>
+                <li><strong><a href="{{ url_for('manage_custom_page', slug='ministries') }}" style="color: #ff6b6b; text-decoration: none;">📄 Manage Ministries Page</a></strong></li>
+                <li><strong><a href="{{ url_for('manage_custom_page', slug='prayer-requests') }}" style="color: #ff6b6b; text-decoration: none;">📄 Manage Prayer Requests Page</a></strong></li>
+                <li><strong><a href="{{ url_for('manage_custom_page', slug='senior-adults') }}" style="color: #ff6b6b; text-decoration: none;">📄 Manage Senior Adults Page</a></strong></li>
+                <li><strong><a href="{{ url_for('manage_gallery') }}" style="color: #ff6b6b; text-decoration: none;">🖼 Manage Gallery</a></strong></li>
+                <li><strong><a href="{{ url_for('manage_home_images') }}" style="color: #ff6b6b; text-decoration: none;">🏠 Manage Home Ministry Images</a></strong></li>
+            {% endif %}
+            {% if current_role == 'admin' %}
+                <li><strong><a href="{{ url_for('manage_users') }}" style="color: #ff6b6b; text-decoration: none;">👥 Manage Users</a></strong></li>
+            {% endif %}
+            <li><strong><a href="{{ url_for('logout') }}" style="color: #ff6b6b; text-decoration: none;">🚪 Logout ({{ current_username }})</a></strong></li>
+        {% else %}
+            <li><strong><a href="{{ url_for('login') }}" style="color: #ff6b6b; text-decoration: none;">🔐 Login to Manage</a></strong></li>
+        {% endif %}
+    </ul>
+</div>
+{% endblock %}

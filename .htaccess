@@ -1,0 +1,7 @@
+PassengerEnabled On
+PassengerPython /usr/bin/python3.9
+
+# Serve static files directly without going through Passenger
+RewriteEngine On
+RewriteCond %{REQUEST_FILENAME} -f
+RewriteRule ^ - [L]
