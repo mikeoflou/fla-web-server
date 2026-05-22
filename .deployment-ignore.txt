@@ -1,0 +1,11 @@
+Include/
+Lib/
+Scripts/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.pytest_cache/
+.vscode/
+.git/
+.env

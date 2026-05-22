@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container mt-4" style="color: white; background: #121212; min-height: 100vh; padding: 25px; border-radius: 15px;">
+    
+    <div id="videoSection" style="display:none;" class="mb-4 p-3 border border-info rounded bg-black shadow-lg">
+        <h4 id="nowPlayingTitle" class="text-info">Now Playing</h4>
+        <div class="embed-responsive embed-responsive-16by9">
+            <iframe id="mainIframe" class="embed-responsive-item" src="" allowfullscreen></iframe>
+        </div>
+        <button class="btn btn-sm btn-outline-light mt-2" onclick="closePlayer()">Close Player</button>
+    </div>
+
+    <div class="border-bottom pb-3 mb-4">
+        <h2 class="text-primary font-weight-bold">Planned Order of Worship</h2>
+        <p class="text-muted">Next Week's Service Schedule</p>
+    </div>
+
+    <div class="list-group mb-5 shadow">
+        {% for song in songs %}
+        <div class="list-group-item bg-dark border-secondary d-flex justify-content-between align-items-center mb-2 rounded">
+            <div>
+                <span class="h5 {{ 'text-info' if song.id != 'NONE' else 'text-white' }} mr-3">
+                    {{ loop.index }}. {{ song.title }}
+                </span>
+            </div>
+            
+            <div class="d-flex align-items-center">
+                {% if song.id != "NONE" %}
+                    <button class="btn btn-sm btn-info px-3 mr-2" onclick="playMe('{{ song.id }}', '{{ song.title }}')">Play Video</button>
+                {% else %}
+                    <span class="badge badge-secondary py-2 px-3 mr-2">Spoken / Action</span>
+                {% endif %}
+                
+                <form method="POST" style="margin:0;">
+                    <input type="hidden" name="delete_index" value="{{ loop.index0 }}">
+                    <button type="submit" class="btn btn-sm btn-outline-danger">Delete</button>
+                </form>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <div class="card bg-dark border-success mb-5">
+        <div class="card-body">
+            <h5 class="text-success mb-3">Add to Order (Song or Spoken)</h5>
+            <form method="POST" class="form-row">
+                <input type="hidden" name="add_song" value="1">
+                <div class="col-md-5 mb-2">
+                    <input type="text" name="title" class="form-control bg-secondary text-white border-0" placeholder="Title (e.g. Prayer - Jason)" required>
+                </div>
+                <div class="col-md-4 mb-2">
+                    <input type="text" name="yt_id" class="form-control bg-secondary text-white border-0" placeholder="YouTube ID or type NONE" required>
+                </div>
+                <div class="col-md-3 mb-2">
+                    <button type="submit" class="btn btn-success btn-block">Add to List</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="text-center mt-5">
+        <hr class="border-secondary">
+        <a href="{{ url_for('dashboard') }}" class="btn btn-outline-primary btn-lg mt-3">
+            Back to main menu ⬆️
+        </a>
+    </div>
+
+</div>
+
+<script>
+function playMe(id, title) {
+    document.getElementById('videoSection').style.display = 'block';
+    document.getElementById('mainIframe').src = "https://www.youtube.com/embed/" + id + "?autoplay=1";
+    document.getElementById('nowPlayingTitle').innerText = "Now Playing: " + title;
+    window.scrollTo({top: 0, behavior: 'smooth'});
+}
+function closePlayer() {
+    document.getElementById('videoSection').style.display = 'none';
+    document.getElementById('mainIframe').src = "";
+}
+</script>
+{% endblock content %}

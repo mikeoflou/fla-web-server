@@ -1,0 +1,8 @@
+{
+    "admin": {
+        "password": "your_secure_password_here"
+    },
+    "jason": {
+        "password": "jasons_password_here"
+    }
+}

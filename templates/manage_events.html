@@ -1,0 +1,176 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div style="padding: 20px; max-width: 900px; margin: 30px auto;">
+    <h2 style="color: #2ecc71; text-align: center; margin: 0 0 24px 0;">Manage Events</h2>
+
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        <div style="background: #1a5f1a; border: 1px solid #2ecc71; border-radius: 6px; padding: 10px; margin-bottom: 20px; color: #9adfaa;">
+            {% for msg in messages %}<div>{{ msg }}</div>{% endfor %}
+        </div>
+        {% endif %}
+    {% endwith %}
+
+    {# Add New Event Form #}
+    <div style="background: #1a5f1a; padding: 20px; border-radius: 8px; border: 2px solid #2ecc71; margin-bottom: 36px;">
+        <h3 style="color: #2ecc71; margin: 0 0 16px 0;">Add New Event</h3>
+        <form method="POST" action="{{ url_for('add_event') }}" enctype="multipart/form-data" style="display: flex; flex-direction: column; gap: 12px;">
+
+            <div>
+                <input type="text" name="title" placeholder="Event Title (optional)"
+                       style="padding: 9px; border: 1px solid #2ecc71; border-radius: 4px; background: #000; color: #2ecc71; width:100%; box-sizing:border-box;">
+                <small style="display:block; margin-top:5px; color:#8fd7aa;">If you leave the title blank, it will save as <strong>Church Event</strong>.</small>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+                <input type="text" name="date" placeholder="Date (e.g. April 12, 2026)"
+                       style="padding: 9px; border: 1px solid #2ecc71; border-radius: 4px; background: #000; color: #2ecc71;">
+                <input type="text" name="time" placeholder="Time (e.g. 10:30 AM)"
+                       style="padding: 9px; border: 1px solid #2ecc71; border-radius: 4px; background: #000; color: #2ecc71;">
+            </div>
+
+            <input type="text" name="location" placeholder="Location (e.g. Main Sanctuary)"
+                   style="padding: 9px; border: 1px solid #2ecc71; border-radius: 4px; background: #000; color: #2ecc71;">
+
+            <textarea name="description" placeholder="Full event description..." rows="4"
+                      style="padding: 9px; border: 1px solid #2ecc71; border-radius: 4px; background: #000; color: #2ecc71; resize: vertical;"></textarea>
+
+            <div>
+                <label style="color: #9adfaa; font-size: 0.9rem; display: block; margin-bottom: 4px;">Hero Image (main card photo)</label>
+                <div data-drop-zone style="border:2px dashed #2ecc71; border-radius:10px; padding:16px; text-align:center; background:#06160c; cursor:pointer; margin-bottom:8px;" data-zone-label="Hero image">
+                    <div style="font-weight:bold; margin-bottom:4px;">Drag and drop a hero image here</div>
+                    <div style="color:#9adfaa; font-size:0.9rem;">or click below to browse</div>
+                </div>
+                <input type="file" name="hero_image" accept="image/*" data-file-input
+                       style="color: #9adfaa; font-size: 0.9rem; width:100%;">
+                <small data-file-feedback style="display:block; margin-top:6px; color:#8fd7aa;">No hero image selected yet.</small>
+            </div>
+
+            <div>
+                <label style="color: #9adfaa; font-size: 0.9rem; display: block; margin-bottom: 6px;">Gallery Photos (up to 3)</label>
+                <div data-drop-zone style="border:2px dashed #2ecc71; border-radius:10px; padding:16px; text-align:center; background:#06160c; cursor:pointer; margin-bottom:8px;" data-zone-label="Gallery photos">
+                    <div style="font-weight:bold; margin-bottom:4px;">Drag and drop event gallery photos here</div>
+                    <div style="color:#9adfaa; font-size:0.9rem;">Drop up to 3 photos at once</div>
+                </div>
+                <input type="file" name="gallery_images" accept="image/*" multiple data-file-input style="color: #9adfaa; font-size: 0.9rem; width:100%;">
+                <small data-file-feedback style="display:block; margin-top:6px; color:#8fd7aa;">No gallery photos selected yet.</small>
+            </div>
+
+            <button type="submit"
+                    style="background: #1f6f3a; color: #fff; padding: 12px 20px; border: none; border-radius: 4px; cursor: pointer; font-weight: bold; font-size: 1rem; text-transform: uppercase; letter-spacing: 1px;">
+                Add Event
+            </button>
+        </form>
+    </div>
+
+    {# Event List #}
+    <h3 style="color: #2ecc71; margin: 0 0 8px 0;">All Events ({{ events|length }})</h3>
+    <p style="color:#9adfaa; margin: 0 0 16px 0;">Use <strong>Move Up</strong> and <strong>Move Down</strong> to control the order of the public event cards.</p>
+
+    {% if events %}
+    <div style="display: flex; flex-direction: column; gap: 14px;">
+        {% for event in events %}
+        <div style="border: 2px solid #2ecc71; border-radius: 8px; padding: 14px; background: #000; display: flex; gap: 16px; align-items: flex-start;">
+
+            {% if event.hero_image %}
+            <img src="{{ url_for('static', filename='images/events/' + event.hero_image) }}"
+                 alt="{{ event.title }}"
+                 style="width: 90px; height: 70px; object-fit: cover; border-radius: 6px; border: 1px solid #2ecc71; flex-shrink: 0;"
+                 onerror="this.style.display='none';">
+            {% else %}
+            <div style="width: 90px; height: 70px; background: #1a5f1a; border-radius: 6px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                <span style="font-size: 1.8rem;">&#128197;</span>
+            </div>
+            {% endif %}
+
+            <div style="flex: 1; min-width: 0;">
+                <h4 style="color: #2ecc71; margin: 0 0 4px 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{ event.title }}</h4>
+                <div style="color: #9adfaa; font-size: 0.85rem; margin-bottom: 4px;">
+                    {% if event.date %}{{ event.date }}{% endif %}
+                    {% if event.time %} &bull; {{ event.time }}{% endif %}
+                    {% if event.location %} &bull; {{ event.location }}{% endif %}
+                </div>
+                {% if event.description %}
+                <p style="color: #888; font-size: 0.85rem; margin: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{ event.description[:80] }}</p>
+                {% endif %}
+            </div>
+
+            <div style="display: flex; flex-wrap: wrap; gap: 8px; flex-shrink: 0; align-items: flex-start; justify-content: flex-end;">
+                <form action="{{ url_for('move_event', event_id=event.id, direction='up') }}" method="POST" style="display:inline;">
+                    <button type="submit"
+                            {% if loop.first %}disabled{% endif %}
+                            style="background: {{ '#355143' if loop.first else '#14532d' }}; color: #fff; padding: 6px 12px; border: none; border-radius: 4px; cursor: {{ 'not-allowed' if loop.first else 'pointer' }}; font-size: 0.85rem; opacity: {{ '0.55' if loop.first else '1' }};">Move Up</button>
+                </form>
+                <form action="{{ url_for('move_event', event_id=event.id, direction='down') }}" method="POST" style="display:inline;">
+                    <button type="submit"
+                            {% if loop.last %}disabled{% endif %}
+                            style="background: {{ '#355143' if loop.last else '#14532d' }}; color: #fff; padding: 6px 12px; border: none; border-radius: 4px; cursor: {{ 'not-allowed' if loop.last else 'pointer' }}; font-size: 0.85rem; opacity: {{ '0.55' if loop.last else '1' }};">Move Down</button>
+                </form>
+                <a href="{{ url_for('edit_event', event_id=event.id) }}"
+                   style="background: #1f6f3a; color: #fff; padding: 6px 14px; border-radius: 4px; text-decoration: none; font-size: 0.9rem;">Edit / Images</a>
+                <form action="{{ url_for('delete_event', event_id=event.id) }}" method="POST" style="display:inline;">
+                    <input type="submit" value="Delete"
+                           style="background: #dc3545; color: #fff; padding: 6px 14px; border: none; border-radius: 4px; cursor: pointer; font-size: 0.9rem;"
+                           onclick="return confirm('Delete \'{{ event.title }}\'?');">
+                </form>
+            </div>
+
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <p style="color: #888;">No events yet. Add one using the form above.</p>
+    {% endif %}
+
+    <div style="margin-top: 28px; text-align: center;">
+        <a href="{{ url_for('events_page') }}" style="color: #2ecc71; text-decoration: none; font-size: 0.95rem;">&larr; View Public Events Page</a>
+    </div>
+
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    document.querySelectorAll('[data-drop-zone]').forEach(function (zone) {
+        const parent = zone.parentElement;
+        const input = parent.querySelector('[data-file-input]');
+        const feedback = parent.querySelector('[data-file-feedback]');
+        const label = zone.getAttribute('data-zone-label') || 'Files';
+
+        if (!input) return;
+
+        const updateFeedback = function (files) {
+            if (!feedback) return;
+            if (!files || files.length === 0) {
+                feedback.textContent = 'No ' + label.toLowerCase() + ' selected yet.';
+                return;
+            }
+            feedback.textContent = files.length + ' file(s): ' + Array.from(files).map(function (file) { return file.name; }).join(', ');
+        };
+
+        zone.addEventListener('click', function () { input.click(); });
+        ['dragenter', 'dragover'].forEach(function (eventName) {
+            zone.addEventListener(eventName, function (event) {
+                event.preventDefault();
+                zone.style.background = '#0d2615';
+                zone.style.borderColor = '#7ff0a3';
+            });
+        });
+        ['dragleave', 'drop'].forEach(function (eventName) {
+            zone.addEventListener(eventName, function (event) {
+                event.preventDefault();
+                zone.style.background = '#06160c';
+                zone.style.borderColor = '#2ecc71';
+            });
+        });
+        zone.addEventListener('drop', function (event) {
+            input.files = event.dataTransfer.files;
+            updateFeedback(input.files);
+        });
+        input.addEventListener('change', function () {
+            updateFeedback(input.files);
+        });
+    });
+});
+</script>
+{% endblock %}

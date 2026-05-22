@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container text-center add-post-container">
+    <h1 class="add-post-title">Create Sermon Entry</h1>
+    <p class="add-post-description">This will appear on the Sermon Archive (Chris) page</p>
+
+    <form method="POST">
+        <table class="add-post-table">
+            <tr><td><input type="text" name="title" placeholder="Sermon Title" required class="add-post-input"></td></tr>
+            <tr><td><input type="text" name="pastor" placeholder="Pastor Name" required class="add-post-input"></td></tr>
+            <tr><td><input type="text" name="date" placeholder="Date (e.g., Oct 27, 2024)" required class="add-post-input"></td></tr>
+            
+            <tr><td><input type="text" name="video_url" placeholder="YouTube URL (Paste the full link here)" class="add-post-input"></td></tr>
+            <tr><td><input type="text" name="scripture" placeholder="Scripture Reference (e.g., John 3:16-17)" class="add-post-input"></td></tr>
+            
+            <tr><td><textarea name="bible_text" placeholder="Paste the full Scripture text here..." class="add-post-textarea bible-text"></textarea></td></tr>
+            <tr><td><textarea name="content" placeholder="Sermon Outline / Notes..." class="add-post-textarea content"></textarea></td></tr>
+            
+            <tr>
+                <td>
+                    <button type="submit" class="add-post-button">
+                        Save and Publish Sermon
+                    </button>
+                </td>
+            </tr>
+        </table>
+    </form>
+    <a href="{{ url_for('admin_panel') }}" class="add-post-back-link">← Back to Admin</a>
+</div>
+{% endblock %}

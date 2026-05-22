@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html style="background-color: #0d1117;">
+<head>
+    <title>Python Tips</title>
+    <link rel="stylesheet" href="https://pyscript.net/releases/2024.1.1/core.css" />
+    <script type="module" src="https://pyscript.net/releases/2024.1.1/core.js"></script>
+</head>
+<body style="background-color: #0d1117; color: #f0f6fc; margin: 0; font-family: sans-serif; display: flex; flex-direction: column; min-height: 100vh;">
+
+    <nav style="display: flex; justify-content: center; background: #161b22; padding: 20px; border-bottom: 1px solid #30363d;">
+        <a href="/" style="color: #58a6ff; margin: 0 15px; text-decoration: none; font-weight: bold;">Home</a>
+        <a href="/blogs" style="color: #58a6ff; margin: 0 15px; text-decoration: none; font-weight: bold;">Blogs</a>
+        <a href="/logout" style="color: #f85149; margin: 0 15px; text-decoration: none; font-weight: bold;">Logout</a>
+    </nav>
+
+<div style="max-width: 800px; margin: 0 auto; padding: 40px 20px;">
+    <h1 style="color: #58a6ff;">Pro Python Tip: F-Strings</h1>
+    <p style="color: #c9d1d9;">Instead of old-school formatting, use f-strings for cleaner code:</p>
+    
+    <div style="max-width: 400px; margin: 0 auto; text-align: center;">
+    <div id="output-card" style="background: #161b22; padding: 30px; border-radius: 8px; border: 1px solid #30363d; font-family: 'Courier New', monospace; color: #79c0ff; font-size: 1.8rem; margin-bottom: 20px; transition: all 0.3s ease;">
+        Hello, <span id="display-name">...</span>!
+    </div>
+
+    <div style="margin-top: 30px; color: #c9d1d9; line-height: 1.8;">
+        <p>
+            Python is a very versatile language, and f-strings are just one of the many features 
+            that make it great for developers. They allow you to embed expressions inside string 
+            literals, using a minimal syntax.
+        </p>
+        <p>
+            This website is built using <strong>Python and Flask</strong>, showcasing how you 
+            can go from a simple script to a full web server!
+        </p>
+    </div>
+    <button onclick="runPythonSim()" style="background-color: #238636; color: white; border: none; padding: 12px 24px; border-radius: 6px; font-weight: bold; cursor: pointer; transition: transform 0.1s;">
+        Run Python Script
+    </button>
+    </div>
+    <script>
+
+    function runPythonSim() {
+    // This simulates the Python variable being processed
+    const name = "Mike"; 
+    
+    // Update the HTML element
+    const display = document.getElementById('display-name');
+    display.innerText = name;
+    
+    // Add a little "glow" effect when it runs
+    const card = document.getElementById('output-card');
+    card.style.boxShadow = "0 0 20px rgba(121, 192, 255, 0.4)";
+    card.style.borderColor = "#79c0ff";
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Widows and Widowers Ministry</h1>
+<h3>The First ever Widows and Widowers Dinner.</h3>
+<div class="gallery-grid">
+
+    <img src="{{ url_for('static', filename='images/widows_widowers/widows_widowers.png') }}" alt="Widows and Widowers" style="width: 100%; max-width: 400px; height: auto; margin-bottom: 20px;">
+    <img src="{{ url_for('static', filename='images/widows_widowers/widows_widowers1.png') }}" alt="Widows and Widowers 1" style="width: 100%; max-width: 400px; height: auto; margin-bottom: 20px;">
+    <img src="{{ url_for('static', filename='images/widows_widowers/widows_widowers2.png') }}" alt="Widows and Widowers 2" style="width: 100%; max-width: 400px; height: auto; margin-bottom: 20px;">
+    <img src="{{ url_for('static', filename='images/widows_widowers/widows_widowers3.png') }}" alt="Widows and Widowers 3" style="width: 100%; max-width: 400px; height: auto;">
+
+
+</div>
+<style>
+body {
+  background-color: black;
+  color: white;
+}
+.gallery-grid {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+img {
+  border: 2px solid #39FF14;
+  box-shadow: 0 0 0 4px white, 0 0 0 6px #39FF14;
+  border-radius: 10px;
+}
+</style>
+{% endblock %}

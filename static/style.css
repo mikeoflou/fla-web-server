@@ -1,0 +1,210 @@
+/* 4. Scripture Reading - Fixing the "Too Small" issue */
+.scripture-text, .main-content p {
+    font-size: 1.4rem !important; /* Larger for mobile reading */
+    color: #ffffff !important; /* White text for better contrast */
+    line-height: 1.6;
+    margin: 20px 0;
+}
+
+/* Header fix for Numbers 27 */
+h2, h1 {
+    color: lime !important;
+    font-size: 1.8rem !important;
+    margin-top: 60px; /* Space so it doesn't hide behind the button */
+}
+.ministry-image {
+    width: 300px;
+    height: 300px;
+    object-fit: cover; /* Crops the image to fill the 300x300 box without distortion */
+    border: 2px solid black; /* Matches your current bold theme */
+    border-radius: 8px; /* Optional: adds a slight curve to the corners */
+}
+/* Container to maintain 16:9 Aspect Ratio */
+.video-container {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 0.5625; /* 16:9 ratio (9 / 16 = 0.5625) */
+    height: 0;
+    overflow: hidden;
+    border: 3px solid black;
+    margin-top: 10px;
+}
+
+.video-container iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: none !important;
+}
+@media (max-width: 760px) { 
+    img{
+        width: 100%;
+        height: 300px;
+        aspect-ratio: 9/16;
+    }
+    body, p, div, span, a, li, h1, h2, h3, h4, h5, h6 {
+    font-size: 22px !important;
+    font-weight: bold !important;
+
+    }
+            
+    
+    
+}
+/* Sidebar Container */
+/* This forces the menu items to disappear when closed */
+/* 1. The Sidebar - Hidden by default */
+.sidebar {
+    height: 100%;
+    width: 0; 
+    position: fixed;   
+    z-index: 9999;     
+    top: 0; 
+    left: 0;           
+    background-color: white; 
+    border-right: 2px solid black; 
+    overflow-x: hidden !important; /* Forces links to stay inside */
+    transition: 0.5s; 
+    padding-top: 60px;
+    visibility: hidden; /* Hide content when width is 0 */
+}
+
+/* 2. Show sidebar when width is expanded */
+.sidebar[style*="width: 250px"] {
+    visibility: visible !important;
+}
+
+/* 3. The Links inside the sidebar */
+.sidebar a {
+    padding: 10px 32px;
+    text-decoration: none;
+    font-size: 22px;
+    color: black !important;
+    display: block;
+    transition: 0.3s;
+    font-weight: bold;
+    white-space: nowrap;
+}
+
+/* 4. The Menu Button */
+.openbtn {
+    font-size: 20px;
+    cursor: pointer;
+    background-color: white;
+    color: black;
+    padding: 10px 15px;
+    border: 2px solid black;
+    font-weight: bold;
+    margin: 10px;
+    display: inline-block;
+}      
+     #main > :first-child { margin-top: 0 !important; }
+        body {
+        font-size: 24px;
+        font-weight: bold;
+        text-align: center;
+    }
+
+    /* Pulls the Welcome text up closer to the menu */
+    .container.text-center {
+        margin-top: 50px !important;
+    }
+
+    /* Simplified video wrapper to fix the black frame gap */
+    .video-wrapper {
+        width: 100%;
+        max-width: 560px;
+        margin: 0 auto 30px auto;
+    }
+
+    iframe {
+        width: 90% !important;
+        max-width: 560px;
+        aspect-ratio: 16 / 9 !important;
+        display: block;
+        margin: 0 auto !important;
+        padding: 0 !important;
+        border: 4px solid black !important;
+        outline: 2px solid white !important;
+        border-radius: 10px;
+        box-shadow: none !important; 
+
+    }
+
+    .footer-section {
+        margin-top: 40px;
+        padding-bottom: 50px;
+    }
+
+/* Newsletter layout styling */
+/* Newsletter layout styling */
+.section-container {
+    padding: 10px;
+    margin-bottom: 20px;
+    font-size: 22px; /* Restores the large text size */
+}
+/* Newsletter layout styling */
+/* Newsletter layout styling */
+.section-container, .section-container p {
+    padding: 15px;
+    margin-bottom: 25px;
+    font-size: 26px;         /* Sized up even more to make it clearly larger */
+    line-height: 1.8;        /* Keeps clean spacing between lines */
+}
+
+.section-container-bottom, .section-container-bottom p {
+    padding: 15px;
+    padding-bottom: 60px;
+    font-size: 26px;         /* Sized up even more to make it clearly larger */
+    line-height: 1.8;        /* Keeps clean spacing between lines */
+}
+.bold-title {
+    font-weight: bold;
+    font-size: 28px;         /* Makes your section headings pop */
+    margin-bottom: 15px;
+}
+
+.text-center-bold {
+    text-align: center;
+    font-weight: bold;
+    font-size: 32px;         /* Sized up the main title */
+    margin-bottom: 20px;
+}
+
+/* Scripture Text Box Styling */
+.scripture-box {
+    text-align: left;
+    margin-left: 0px; /* Aligns with the outer 10px wrapper */
+    font-size: 1.25rem; /* Makes the scripture text larger */
+    line-height: 1.6;
+    font-weight: normal;
+}
+.section-container-bottom p {
+    text-align: left;
+    font-size: 1.25rem; /* Makes the outline text larger */
+    line-height: 1.6;
+    margin-bottom: 12px;
+}
+
+.indented-verse {
+    padding-left: 30px;
+    font-style: italic;
+}
+
+.section-divider {
+    border: 1px solid black;
+    margin: 40px 0;
+}
+
+/* Styled input boxes for the interactive sermon outlines */
+.outline-blank-input {
+    border: 3px solid black;
+    font-size: 1.26rem;         /* Matches the large text look */
+    font-weight: bolder;
+    width: 100%;
+    max-width: 280px;        /* Widened slightly to fit responses better */
+    padding: 2px 5px;
+    margin: 0 5px;
+}

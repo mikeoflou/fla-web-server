@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block title %}Volunteers{% endblock %}
+
+{% block content %}
+<style>
+    /* Drops the content down by 20px and forces all text to black */
+    .volunteers-container {
+        margin-top: 50px !important;
+        color: #000000 !important;
+    }
+    
+    .volunteers-container h1, 
+    .volunteers-container h2, 
+    .volunteers-container p,
+    .volunteers-container div,
+    .volunteers-container strong {
+        color: #000000 !important;
+    }
+</style>
+
+<div class="container volunteers-container">
+    <h1 class="mb-4">Volunteers</h1>
+    
+
+   <div class="row">
+    <div class="col-12">
+        <p><strong>Nursery:</strong> Rachel Hall, Ivy Jameson, Terri Taylor, & Yvette LeMaster</p>
+        <p><strong>Children’s Church Pre-K:</strong> Jennifer McLendon</p>
+        <p><strong>Children’s Church 1st – 5th:</strong> Melissa Jacobs</p>
+
+        <p><strong>Wednesday Night:</strong> Shawna Albert & Kim Karnes</p>
+        
+        <h3 class="mt-5 mb-3">Next Sunday</h3>
+        <p><strong>Nursery:</strong> Marty Szymansky, Alisa Lark, Kelsey Routson, & Lydia Karnes</p>
+        <p><strong>Children’s Church Pre-K:</strong> Jennifer McLendon</p>
+        <p><strong>Children’s Church 1st – 5th:</strong> Melissa Jacobs</p>
+        
+        <h3 class="mt-5 mb-3">May Greeters</h3>
+        <p><strong>9:40am–10:05am</strong> – Ivy Jameson & Gayle Cox</p>
+        <p><strong>10:40am–11:05am</strong> – Debbie Peyton</p>
+    </div>
+</div>
+</div>
+{% endblock %}

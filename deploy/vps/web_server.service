@@ -1,0 +1,15 @@
+[Unit]
+Description=Flask web_server (Gunicorn)
+After=network.target
+
+[Service]
+User=ubuntu
+Group=www-data
+WorkingDirectory=/var/www/web_server
+Environment="SECRET_KEY=8ug2bHSHgf9v49YJimSYP5ClLCUfONeBPcuRq6eLBs0s+3b7ubaBwZQPTC3XMNIz"
+ExecStart=/var/www/web_server/.venv/bin/gunicorn --workers 3 --bind 127.0.0.1:8000 --access-logfile - --error-logfile - passenger_wsgi:application
+Restart=always
+RestartSec=3
+
+[Install]
+WantedBy=multi-user.target

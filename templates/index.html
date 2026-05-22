@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="home-container">
+    <div>
+        <a href="https://www.ehbcnewsletterjeff.org">
+<img src="{{ url_for('static', filename='images/church_exterior.jpg') }}" alt="EHBC Church Exterior" class="church-banner">
+    <h1 class="main-title">Welcome to Eastern Heights Baptist Church Newsletter</h1>
+    <h2>We exist to make Jesus known.</h2>
+    <h3>Stay updated with the latest from Eastern Heights Baptist Church.</h3>
+    <p class="bold-intro">Click on the staff members below to learn more about their ministries and access their content.</p>
+    <p class="bold-intro">We are located at 4202 Helen Rd. Jeffersonville, IN. Join us for worship every Sunday at 9:00 AM, Sunday School 10:00 AM, and Worship Service again at 11:00 AM.</p>
+
+    <div class="ministry-cards">
+        <a href="/chris" class="staff-card">
+            <img src="/static/images/staff/chris.jpg" alt="Pastor Chris">
+            <div class="staff-name">Pastor Chris</div>
+        </a>
+
+       <a href="/jason" class="staff-card">
+            <img src="/static/images/staff/jason.jpg" alt="Pastor Jason">
+            <div class="staff-name">Pastor Jason</div>
+        </a>
+
+        <a href="#" class="staff-card">
+
+            <img src="/static/images/staff/patrick.jpg" alt="Pastor Patrick">
+            
+            <div class="staff-name">Pastor Patrick</div>
+        </a>
+
+        <a href="/senior_adults" class="staff-card">
+            <img src="/static/images/staff/kevin.jpg" alt="Pastor Kevin">
+            <div class="staff-name">Pastor Kevin</div>
+        </a>
+    </div>
+</div>
+
+<style>
+    /* FORCE BOLD BLACK TEXT ON WHITE */
+    .home-container {
+        text-align: center;
+        padding: 0px 20px 40px 20px;
+        background-color: white !important;
+    }
+
+
+    .home-container h1, .home-container h2, .home-container h3, .bold-intro {
+        color: black !important;
+        font-weight: 900 !important;
+    }
+
+    /* STAFF IMAGE GRID: 300x300 */
+    .ministry-cards {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 25px;
+        padding: 30px 10px;
+    }
+
+    .staff-card {
+        text-decoration: none;
+        width: 300px;
+    }
+
+    .staff-card img {
+        width: 300px !important;
+        height: 300px !important;
+        object-fit: cover; 
+        border: 4px solid black;
+        border-radius: 12px;
+        display: block;
+    }
+
+    .staff-name {
+        color: black !important;
+        font-weight: 900 !important;
+        font-size: 1.3rem;
+        margin-top: 12px;
+        text-transform: uppercase;
+    }
+</style>
+{% endblock %}

@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1 style="text-align: center; color: #39FF14; margin-top: 30px;">Contact Us</h1>
+
+<div class="contact-container">
+    
+    <div class="contact-info">
+        <h2>Church Office</h2>
+        <p><strong>Address:</strong><br>{{ info.address }}</p>
+        <p><strong>Phone:</strong><br>{{ info.phone }}</p>
+        <p><strong>Email:</strong><br>{{ info.email }}</p>
+        <p><strong>Office Hours:</strong><br>{{ info.office_hours }}</p>
+    </div>
+<div class="map-container">
+    <iframe 
+src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3131.258763567156!2d-85.70757342345517!3d38.308736371852445!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x88697223dcbe5eb5%3A0x22331f0fa9e6a712!2sEastern%20Heights%20Baptist%20Church!5e0!3m2!1sen!2sus!4v1712860000000!5m2!1sen!2sus"        loading="lazy" 
+        referrerpolicy="no-referrer-when-downgrade">
+    </iframe>
+</div>
+ 
+
+
+
+</div>
+{% endblock %}

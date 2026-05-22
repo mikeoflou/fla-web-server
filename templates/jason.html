@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container text-center">
+    <h1 class="welcome-title">Welcome Announcements - Pastor Patrick</h1>
+    <h2>Opening Prayer - Pastor Patrick</h2>
+    <h2>Prelude Music</h2>
+    <h2>Call to Worship - Pastor Jason</h2> 
+</div>
+
+<h4 style="margin-top: 30px;">Songs for this coming Sunday 5/24/2026</h4>
+
+{% for song in songs[:3] %}
+<div class="song-block">
+    <p style="margin-bottom: 5px;">{{ song.title }}</p>
+    <div class="video-wrapper">
+        <iframe 
+            src="https://www.youtube.com/embed/{{ song.youtube_id }}" 
+            title="{{ song.title }}" 
+            frameborder="0" 
+            allowfullscreen>
+        </iframe>
+    </div>
+</div>
+{% endfor %}
+
+<div class="footer-section">
+    <a href="/chris">Message - Pastor Chris</a>
+    <h2>Invitation</h2>
+
+   {% if songs|length >= 4 %}
+    <p style="margin-bottom: 5px;">{{ songs[3].title }}</p>
+    <div class="video-wrapper">
+        <iframe 
+            src="https://www.youtube.com/embed/{{ songs[3].youtube_id }}" 
+            title="{{ songs[3].title }}" 
+            frameborder="0" 
+            allowfullscreen>
+        </iframe>
+    </div>
+    {% endif %}
+
+    <h2>Benediction</h2>
+    <h2>Pastor Kevin</h2>
+</div>
+
+
+<!--
+<style>
+    body {
+        font-size: 24px;
+        font-weight: bold;
+        text-align: center;
+    }
+
+    /* Pulls the Welcome text up closer to the menu */
+    .container.text-center {
+        margin-top: 50px !important;
+    }
+
+    /* Simplified video wrapper to fix the black frame gap */
+    .video-wrapper {
+        width: 100%;
+        max-width: 560px;
+        margin: 0 auto 30px auto;
+    }
+
+    iframe {
+        width: 100% !important;
+        aspect-ratio: 16 / 9 !important;
+        display: block;
+        margin: 0 auto !important;
+        padding: 0 !important;
+        border: 4px solid black !important;
+        outline: 2px solid white !important;
+        border-radius: 10px;
+        box-shadow: none !important; 
+
+    }
+
+    .footer-section {
+        margin-top: 40px;
+        padding-bottom: 50px;
+    }
+</style>-->
+{% endblock %}

@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="gallery-container">
+    <h1 class="gallery-title">Photo Gallery</h1>
+
+    {% if images %}
+    <div class="gallery-grid">
+        {% for image in images %}
+        <div class="gallery-item">
+            <div class="gallery-item-header">{{ image.display_name }}</div>
+            <img src="{{ url_for('static', filename='images/gallery/' + image.filename) }}" alt="Gallery image" class="gallery-item-image">
+            <div class="gallery-item-footer">{{ image.display_title or 'No title yet.' }}</div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="gallery-empty">
+        No gallery images yet.
+    </div>
+    {% endif %}
+
+    {% if can_manage('pages') %}
+    <div class="gallery-manage">
+        <a href="{{ url_for('manage_gallery') }}" class="gallery-manage-link">Manage Gallery</a>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

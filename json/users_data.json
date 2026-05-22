@@ -1,0 +1,58 @@
+[
+  {
+    "username": "admin",
+    "password": "2026January!",
+    "role": "admin"
+  },
+  {
+    "username": "Patrick",
+    "password": "Patrick123",
+    "role": "Youth"
+  },
+  {
+    "username": "Kevin",
+    "password": "Kevin123",
+    "role": "Seniors"
+  },
+  {
+    "username": "jason",
+    "password": "jason123",
+    "role": "worship"
+  },
+  {
+    "username": "chris",
+    "password": "chris123",
+    "role": "sermons"
+  },
+  {
+    "username": "kevin",
+    "password": "kevin123",
+    "role": "kevin"
+  },
+  {
+    "username": "patrick",
+    "password": "patrick123",
+    "role": "patrick"
+  },
+  {
+    "username": "testuser",
+    "password": "test123",
+    "role": "test"
+  }
+  ,
+  {
+    "username": "Chris",
+    "password": "chris123",
+    "role": "sermons"
+  },
+  {
+    "username": "Patrick",
+    "password": "Patrick123",
+    "role": "Youth"
+  },
+  {
+    "username": "Kevin",
+    "password": "Kevin123",
+    "role": "Seniors"
+  }
+]

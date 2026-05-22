@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container mt-5" style="background-color: #fdfaf0; padding: 30px; border-radius: 10px;">
+    <h2 class="text-success">Update Order of Worship</h2>
+    
+    <form method="POST" action="{{ url_for('add_worship_item') }}" class="mb-5">
+        <div class="row">
+            <div class="col-md-3"><input type="date" name="date" class="form-control" required></div>
+            <div class="col-md-3"><input type="text" name="title" placeholder="Song/Item Name" class="form-control"></div>
+            <div class="col-md-2"><input type="text" name="leader" placeholder="Who is doing it?" class="form-control"></div>
+            <div class="col-md-2"><input type="text" name="yt_url" placeholder="YouTube Embed URL" class="form-control"></div>
+            <div class="col-md-2"><button type="submit" class="btn btn-success">Add to List</button></div>
+        </div>
+    </form>
+
+    <hr>
+
+    <table class="table">
+        <thead><tr><th>Date</th><th>Item</th><th>Action</th></tr></thead>
+        <tbody>
+            {% for item in all_items %}
+            <tr>
+                <td>{{ item.sunday_date }}</td>
+                <td>{{ item.item_title }}</td>
+                <td>
+                    <form method="POST" action="{{ url_for('delete_item', id=item.id) }}">
+                        <button class="btn btn-danger btn-sm">Delete</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

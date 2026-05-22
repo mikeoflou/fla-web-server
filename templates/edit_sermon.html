@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div style="padding: 20px; max-width: 800px; margin: 0 auto;">
+    <h2>Edit Sermon</h2>
+    
+    {% if sermon %}
+    <form method="POST" action="{{ url_for('edit_sermon', sermon_id=sermon.id) }}" style="background: #000000; padding: 20px; border: 2px solid #2ecc71; border-radius: 8px;">
+        
+        <div style="margin-bottom: 15px;">
+            <label style="color: #2ecc71;"><strong>Page Title at Top of Chris's Page:</strong></label><br>
+            <input type="text" name="title" value="{{ sermon.title }}" required style="width: 100%; padding: 8px; border: 1px solid #2ecc71; border-radius: 4px; background: #1a1a1a; color: #2ecc71;">
+            <small style="color: #888;">Change this each week to update the big heading on the public Sermon & Scripture page.</small>
+        </div>
+
+        <div style="margin-bottom: 15px;">
+            <label style="color: #2ecc71;"><strong>Scripture Reference:</strong></label><br>
+            <input type="text" name="scripture" value="{{ sermon.scripture }}" placeholder="e.g., Psalm 23:1-6" required style="width: 100%; padding: 8px; border: 1px solid #2ecc71; border-radius: 4px; background: #1a1a1a; color: #2ecc71;">
+        </div>
+
+        <div style="margin-bottom: 15px;">
+            <label style="color: #2ecc71;"><strong>BibleGateway Link:</strong></label><br>
+            <input type="url" name="scripture_link" value="{{ sermon.scripture_link or '' }}" placeholder="https://www.biblegateway.com/passage/?search=Psalm+23&version=NIV" style="width: 100%; padding: 8px; border: 1px solid #2ecc71; border-radius: 4px; background: #1a1a1a; color: #2ecc71;">
+            <small style="color: #888;">Click link to custom BibleGateway page (optional)</small>
+        </div>
+
+        <div style="margin-bottom: 15px;">
+            <label style="color: #2ecc71;"><strong>YouTube Video URL (embed link):</strong></label><br>
+            <input type="url" name="video_url" value="{{ sermon.video_url or '' }}" placeholder="https://www.youtube.com/embed/VIDEO_ID" style="width: 100%; padding: 8px; border: 1px solid #2ecc71; border-radius: 4px; background: #1a1a1a; color: #2ecc71;">
+            <small style="color: #888;">Leave blank if no video</small>
+        </div>
+
+        <div style="margin-bottom: 15px;">
+            <label style="color: #2ecc71;"><strong>Bible Text / Passage:</strong></label><br>
+            <textarea name="bible_text" style="width: 100%; height: 100px; padding: 8px; border: 1px solid #2ecc71; border-radius: 4px; background: #1a1a1a; color: #2ecc71; font-family: monospace;">{{ sermon.bible_text or '' }}</textarea>
+            <small style="color: #888;">The full scripture passage (optional)</small>
+        </div>
+
+        <div style="margin-bottom: 15px;">
+            <label style="color: #2ecc71;"><strong>Sermon Outline / Content:</strong></label><br>
+            <textarea name="content" style="width: 100%; height: 200px; padding: 8px; border: 1px solid #2ecc71; border-radius: 4px; background: #1a1a1a; color: #2ecc71; font-family: monospace;">{{ sermon.content or '' }}</textarea>
+            <small style="color: #888;">Use newlines and indentation for formatting</small>
+        </div>
+
+        <div style="margin-top: 20px;">
+            <button type="submit" style="background: #2ecc71; color: #000000; padding: 10px 20px; border: none; border-radius: 4px; cursor: pointer; font-weight: bold;">Save Changes</button>
+            <a href="{{ url_for('manage_sermons_page') }}" style="margin-left: 10px; color: #2ecc71; text-decoration: none;">← Cancel</a>
+        </div>
+    </form>
+    {% else %}
+    <p style="color: #888;">Sermon not found.</p>
+    <a href="{{ url_for('manage_sermons_page') }}" style="color: #2ecc71; text-decoration: none;">← Back to Manage Sermons</a>
+    {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,26 @@
+[
+  {
+    "title": "I Will Follow",
+    "key": "G",
+    "youtube_url": "https://www.youtube.com/watch?v=2cu5q_4zuRM",
+    "embed_code": "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/2cu5q_4zuRM\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>"
+  },
+  {
+    "title": "Come Thou Fount (I Will Sing)",
+    "key": "D",
+    "youtube_url": "https://www.youtube.com/watch?v=LoE-uNsGc2E",
+    "embed_code": "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/LoE-uNsGc2E\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>"
+  },
+  {
+    "title": "Graves Into Gardens",
+    "key": "E",
+    "youtube_url": "https://www.youtube.com/watch?v=NYA4DHdBKnY",
+    "embed_code": "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/NYA4DHdBKnY\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>"
+  },
+  {
+    "title": "My Worth Is Not In What I Own",
+    "key": "C",
+    "youtube_url": "https://www.youtube.com/watch?v=vfFrJHuptUQ",
+    "embed_code": "<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/vfFrJHuptUQ\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" referrerpolicy=\"strict-origin-when-cross-origin\" allowfullscreen></iframe>"
+  }
+]

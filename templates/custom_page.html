@@ -1,0 +1,130 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div style="padding: 20px; max-width: 900px; margin: 30px auto;">
+    {% if page_slug == 'contact' %}
+    <div style="margin-bottom: 28px; text-align: center;">
+        <img src="{{ url_for('static', filename='images/church_exterior.jpg') }}" alt="Eastern Heights Baptist Church" style="width: 100%; max-width: 600px; height: auto; border-radius: 10px; border: 2px solid #2ecc71;" onerror="this.style.display='none';">
+    </div>
+
+    <div style="margin: 0 0 28px 0; padding: 18px; background: #09110b; border: 2px solid #2ecc71; border-radius: 12px; box-shadow: 0 8px 22px rgba(0,0,0,0.18);">
+        <h2 style="margin: 0 0 10px 0; text-align: center; color: #2ecc71;">Visit Us</h2>
+        <p style="margin: 0 0 16px 0; text-align: center; color: #f4fff6; font-size: 1.08rem;">
+            Eastern Heights Baptist Church<br>
+            4202 Helen Road, Jeffersonville, IN 47130
+        </p>
+        <div style="overflow: hidden; border-radius: 10px; border: 1px solid #2ecc71; background: #fff;">
+            <iframe
+                title="Map to Eastern Heights Baptist Church"
+                src="https://www.google.com/maps?q=4202+Helen+Road,+Jeffersonville,+IN+47130&output=embed"
+                width="100%"
+                height="360"
+                style="border:0; display:block;"
+                allowfullscreen
+                loading="lazy"
+                referrerpolicy="no-referrer-when-downgrade"></iframe>
+        </div>
+        <p style="margin: 14px 0 0 0; text-align: center; color: #d9f5df; font-size: 0.98rem; line-height: 1.7;">
+            Directions are available in Google Maps for 4202 Helen Road, Jeffersonville, IN 47130.
+        </p>
+    </div>
+    {% endif %}
+
+    {% if page_slug == 'senior-adults' %}
+    <h1 style="text-align: center; margin: 0 0 10px 0; font-size: 2.2rem; color: #2ecc71;">Senior Adult Ministry</h1>
+    <h2 style="text-align: center; margin: 0 0 24px 0; font-size: 1.35rem; color: #9adfaa; font-weight: 600;">Join us on Thursdays at noon for lunch and Bible Study</h2>
+
+    <div style="text-align: center; margin: 0 0 24px 0;">
+        <img src="{{ url_for('static', filename='images/gallery/20260402121942_49_images_seniorLogo.png') }}" alt="Senior Adult Ministry Logo" style="width: 100%; max-width: 260px; height: auto; object-fit: contain; border-radius: 10px; border: 2px solid #2ecc71;" onerror="this.style.display='none';">
+    </div>
+
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; margin: 0 0 24px 0;">
+        <img src="{{ url_for('static', filename='images/gallery/20260402121942_46_images_SeniorBibleStudy.png') }}" alt="Senior Bible Study" style="width: 100%; height: 220px; object-fit: cover; border-radius: 10px; border: 2px solid #2ecc71;" onerror="this.style.display='none';">
+        <img src="{{ url_for('static', filename='images/gallery/20260402121942_47_images_SeniorBibleStudy1.png') }}" alt="Senior Bible Study 2" style="width: 100%; height: 220px; object-fit: cover; border-radius: 10px; border: 2px solid #2ecc71;" onerror="this.style.display='none';">
+        <img src="{{ url_for('static', filename='images/gallery/20260402121942_48_images_SeniorBibleStudy2.png') }}" alt="Senior Bible Study 3" style="width: 100%; height: 220px; object-fit: cover; border-radius: 10px; border: 2px solid #2ecc71;" onerror="this.style.display='none';">
+    </div>
+
+    <h3 style="text-align: center; margin: 0 0 20px 0; font-size: 1.4rem; color: #9adfaa; font-weight: 700;">Senior Adults Christmas Party</h3>
+
+    {% if page_images %}
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; margin: 0 0 24px 0;">
+        {% set ns = namespace(count=0) %}
+        {% for image in page_images %}
+            {% if 'seniorLogo' not in image.filename and 'SeniorBibleStudy' not in image.filename %}
+                {% set ns.count = ns.count + 1 %}
+        <img src="{{ url_for('static', filename='images/gallery/' + image.filename) }}" alt="Senior Adult Ministry photo" style="width: 100%; height: 220px; object-fit: cover; border-radius: 10px; border: 2px solid #2ecc71;" onerror="this.style.display='none';">
+                {% if ns.count == 11 %}
+    </div>
+
+    <h3 style="text-align: center; margin: 0 0 20px 0; font-size: 1.4rem; color: #9adfaa; font-weight: 700;">Enjoying Lunch at Schemps' Bakery in Jeff</h3>
+
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; margin: 0 0 24px 0;">
+                {% elif ns.count == 14 %}
+    </div>
+
+    <h3 style="text-align: center; margin: 0 0 20px 0; font-size: 1.4rem; color: #9adfaa; font-weight: 700;">Huber's Farm</h3>
+
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; margin: 0 0 24px 0;">
+                {% endif %}
+            {% endif %}
+        {% endfor %}
+    </div>
+    {% endif %}
+    {% endif %}
+
+    {% if page_slug == 'womens-ministry' %}
+    <h1 style="text-align: center; margin: 0 0 12px 0; font-size: 2.2rem; color: #2ecc71;">{{ page_title }}</h1>
+    <h2 style="text-align: center; margin: 0 0 24px 0; font-size: 1.2rem; color: #9adfaa; font-weight: 600;">Photos from our Women's Christmas Party</h2>
+
+    {% if page_images %}
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; margin: 0 0 24px 0;">
+        {% for image in page_images %}
+        <img src="{{ url_for('static', filename='images/gallery/' + image.filename) }}" alt="Women's Ministry photo" style="width: 100%; height: 220px; object-fit: cover; border-radius: 10px; border: 2px solid #2ecc71;" onerror="this.style.display='none';">
+        {% endfor %}
+    </div>
+    {% endif %}
+    {% endif %}
+
+    {% if page_slug == 'youth-ministry' %}
+    <h1 style="text-align: center; margin: 0 0 10px 0; font-size: 2.2rem; color: #2ecc71;">{{ page_title }}</h1>
+    <h2 style="text-align: center; margin: 0 0 24px 0; font-size: 1.2rem; color: #9adfaa; font-weight: 600;">Helping students grow in faith, friendship, and service.</h2>
+
+    {% if page_images %}
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; margin: 0 0 24px 0;">
+        {% for image in page_images %}
+        <div style="background:#050505; border: 2px solid #2ecc71; border-radius: 10px; overflow:hidden;">
+            <img src="{{ url_for('static', filename='images/gallery/' + image.filename) }}" alt="Youth Ministry photo" style="width: 100%; height: 220px; object-fit: cover; display:block;" onerror="this.style.display='none';">
+            {% if image.display_name or image.display_title %}
+            <div style="padding:10px 12px; text-align:center;">
+                {% if image.display_name %}
+                <div style="color:#2ecc71; font-weight:700; margin-bottom:4px;">{{ image.display_name }}</div>
+                {% endif %}
+                {% if image.display_title %}
+                <div style="color:#c8f8d9; font-size:0.95rem;">{{ image.display_title }}</div>
+                {% endif %}
+            </div>
+            {% endif %}
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+    {% endif %}
+
+    <div style="padding: 10px 0; white-space: pre-wrap; line-height: 1.9; font-size: 1.45rem; text-align: center;">
+        {{ page_content | safe }}
+    </div>
+
+    {% if can_manage('pages') and page_slug != 'womens-ministry' %}
+    <div style="margin-top: 16px; text-align: center; display:flex; gap:12px; justify-content:center; flex-wrap:wrap; color:#9adfaa;">
+        {% if page_slug in ['youth-ministry', 'senior-adults'] %}
+        <a href="{{ url_for('manage_ministry_pages') }}" style="color: #2ecc71; text-decoration: none; font-weight: 700;">
+            Manage Ministry Pages
+        </a>
+        {% endif %}
+        <a href="{{ url_for('manage_custom_page', slug=page_slug) }}" style="color: #2ecc71; text-decoration: none; font-weight: 700;">
+            Edit This Page
+        </a>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

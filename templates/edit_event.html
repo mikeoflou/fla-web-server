@@ -1,0 +1,171 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div style="padding: 20px; max-width: 800px; margin: 30px auto;">
+
+    <div style="margin-bottom: 16px;">
+        <a href="{{ url_for('manage_events') }}" style="color: #2ecc71; text-decoration: none; font-size: 0.95rem;">
+            &larr; Back to Manage Events
+        </a>
+    </div>
+
+    <h2 style="color: #2ecc71; margin: 0 0 24px 0;">Edit Event</h2>
+
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        <div style="background: #1a5f1a; border: 1px solid #2ecc71; border-radius: 6px; padding: 10px; margin-bottom: 20px; color: #9adfaa;">
+            {% for msg in messages %}<div>{{ msg }}</div>{% endfor %}
+        </div>
+        {% endif %}
+    {% endwith %}
+
+    <form method="POST" action="{{ url_for('edit_event', event_id=event.id) }}" enctype="multipart/form-data"
+          style="background: #1a5f1a; padding: 22px; border-radius: 8px; border: 2px solid #2ecc71; display: flex; flex-direction: column; gap: 14px;">
+
+        <input type="text" name="title" value="{{ event.title }}" placeholder="Event Title *" required
+               style="padding: 9px; border: 1px solid #2ecc71; border-radius: 4px; background: #000; color: #2ecc71;">
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+            <input type="text" name="date" value="{{ event.date }}" placeholder="Date (e.g. April 12, 2026)"
+                   style="padding: 9px; border: 1px solid #2ecc71; border-radius: 4px; background: #000; color: #2ecc71;">
+            <input type="text" name="time" value="{{ event.time }}" placeholder="Time (e.g. 10:30 AM)"
+                   style="padding: 9px; border: 1px solid #2ecc71; border-radius: 4px; background: #000; color: #2ecc71;">
+        </div>
+
+        <input type="text" name="location" value="{{ event.location }}" placeholder="Location"
+               style="padding: 9px; border: 1px solid #2ecc71; border-radius: 4px; background: #000; color: #2ecc71;">
+
+        <textarea name="description" placeholder="Full event description..." rows="5"
+                  style="padding: 9px; border: 1px solid #2ecc71; border-radius: 4px; background: #000; color: #2ecc71; resize: vertical;">{{ event.description }}</textarea>
+
+        {# Hero Image #}
+        <div>
+            <label style="color: #9adfaa; font-size: 0.9rem; display: block; margin-bottom: 6px;">Hero Image</label>
+            {% if event.hero_image %}
+            <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 8px; flex-wrap:wrap;">
+                <img src="{{ url_for('static', filename='images/events/' + event.hero_image) }}"
+                     alt="Current hero"
+                     style="width: 120px; height: 80px; object-fit: cover; border-radius: 6px; border: 1px solid #2ecc71;"
+                     onerror="this.style.display='none';">
+                <button type="submit"
+                        formaction="{{ url_for('delete_event_hero', event_id=event.id) }}"
+                        formmethod="post"
+                        formnovalidate
+                        style="background: #dc3545; color: #fff; padding: 5px 12px; border: none; border-radius: 4px; cursor: pointer; font-size: 0.85rem;"
+                        onclick="return confirm('Remove hero image?');">
+                    Remove Hero
+                </button>
+            </div>
+            {% endif %}
+            <div data-drop-zone style="border:2px dashed #2ecc71; border-radius:10px; padding:16px; text-align:center; background:#06160c; cursor:pointer; margin-bottom:8px;" data-zone-label="Hero image">
+                <div style="font-weight:bold; margin-bottom:4px;">Drag and drop a replacement hero image here</div>
+                <div style="color:#9adfaa; font-size:0.9rem;">or click below to browse</div>
+            </div>
+            <input type="file" name="hero_image" accept="image/*" data-file-input style="color: #9adfaa; font-size: 0.9rem; width:100%;">
+            <small data-file-feedback style="display:block; margin-top:6px; color:#8fd7aa;">No hero image selected yet.</small>
+            {% if event.hero_image %}
+            <p style="color: #666; font-size: 0.8rem; margin: 4px 0 0 0;">Upload a new file to replace the current hero.</p>
+            {% endif %}
+        </div>
+
+        {# Gallery Images #}
+        <div>
+            <label style="color: #9adfaa; font-size: 0.9rem; display: block; margin-bottom: 6px;">
+                Gallery Photos ({{ event.gallery_images|length }}/3)
+            </label>
+            {% if event.gallery_images %}
+            <div style="display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 12px;">
+                {% for img in event.gallery_images %}
+                <div style="position: relative; display: inline-block;">
+                    <img src="{{ url_for('static', filename='images/events/' + img) }}"
+                         alt="Gallery photo {{ loop.index }}"
+                         style="width: 110px; height: 80px; object-fit: cover; border-radius: 6px; border: 1px solid #2ecc71; display: block;"
+                         onerror="this.style.display='none';">
+                    <button type="submit"
+                            formaction="{{ url_for('delete_event_gallery', event_id=event.id, img_idx=loop.index0) }}"
+                            formmethod="post"
+                            formnovalidate
+                            style="position: absolute; top: 4px; right: 4px; background: #dc3545; color: #fff; border: none; border-radius: 50%; width: 22px; height: 22px; cursor: pointer; font-size: 0.75rem; line-height: 1; padding: 0;"
+                            onclick="return confirm('Remove this photo?');">
+                        &#10005;
+                    </button>
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+
+            {% if event.gallery_images|length < 3 %}
+            <div data-drop-zone style="border:2px dashed #2ecc71; border-radius:10px; padding:16px; text-align:center; background:#06160c; cursor:pointer; margin-bottom:8px;" data-zone-label="Gallery photos">
+                <div style="font-weight:bold; margin-bottom:4px;">Drag and drop more event photos here</div>
+                <div style="color:#9adfaa; font-size:0.9rem;">Up to {{ 3 - event.gallery_images|length }} more photo(s)</div>
+            </div>
+            <input type="file" name="gallery_images" accept="image/*" multiple data-file-input style="color: #9adfaa; font-size: 0.9rem; width:100%;">
+            <small data-file-feedback style="display:block; margin-top:6px; color:#8fd7aa;">No gallery photos selected yet.</small>
+            <p style="color: #666; font-size: 0.8rem; margin: 4px 0 0 0;">
+                {{ 3 - event.gallery_images|length }} slot(s) remaining
+            </p>
+            {% else %}
+            <p style="color: #9adfaa; font-size: 0.85rem; margin: 0;">Gallery is full (3/3). Remove a photo to add another.</p>
+            {% endif %}
+        </div>
+
+        <button type="submit"
+                style="background: #1f6f3a; color: #fff; padding: 12px 20px; border: none; border-radius: 4px; cursor: pointer; font-weight: bold; font-size: 1rem; text-transform: uppercase; letter-spacing: 1px;">
+            Save Changes
+        </button>
+
+    </form>
+
+    <div style="margin-top: 20px; text-align: center;">
+        <a href="{{ url_for('event_detail', event_id=event.id) }}" style="color: #2ecc71; text-decoration: none; font-size: 0.95rem;">
+            View Public Event Page &rarr;
+        </a>
+    </div>
+
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    document.querySelectorAll('[data-drop-zone]').forEach(function (zone) {
+        const parent = zone.parentElement;
+        const input = parent.querySelector('[data-file-input]');
+        const feedback = parent.querySelector('[data-file-feedback]');
+        const label = zone.getAttribute('data-zone-label') || 'Files';
+
+        if (!input) return;
+
+        const updateFeedback = function (files) {
+            if (!feedback) return;
+            if (!files || files.length === 0) {
+                feedback.textContent = 'No ' + label.toLowerCase() + ' selected yet.';
+                return;
+            }
+            feedback.textContent = files.length + ' file(s): ' + Array.from(files).map(function (file) { return file.name; }).join(', ');
+        };
+
+        zone.addEventListener('click', function () { input.click(); });
+        ['dragenter', 'dragover'].forEach(function (eventName) {
+            zone.addEventListener(eventName, function (event) {
+                event.preventDefault();
+                zone.style.background = '#0d2615';
+                zone.style.borderColor = '#7ff0a3';
+            });
+        });
+        ['dragleave', 'drop'].forEach(function (eventName) {
+            zone.addEventListener(eventName, function (event) {
+                event.preventDefault();
+                zone.style.background = '#06160c';
+                zone.style.borderColor = '#2ecc71';
+            });
+        });
+        zone.addEventListener('drop', function (event) {
+            input.files = event.dataTransfer.files;
+            updateFeedback(input.files);
+        });
+        input.addEventListener('change', function () {
+            updateFeedback(input.files);
+        });
+    });
+});
+</script>
+{% endblock %}

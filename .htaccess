@@ -1,0 +1,12 @@
+# Standard WampServer settings for a Python project
+RewriteEngine On
+
+
+
+# Otherwise, send everything to your main entry file
+# Replace 'app.py' with your actual main file name if it is different
+RewriteRule ^(.*)$ index.py/$1 [L]
+
+RewriteEngine On
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^(.*)$ /cgi-bin/dispatch.fcgi/$1 [L]

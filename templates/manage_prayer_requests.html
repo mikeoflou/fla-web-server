@@ -1,0 +1,99 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div style="padding: 20px; max-width: 1100px; margin: 30px auto;">
+    <h2 style="text-align:center; margin-bottom:8px;">Manage Prayer Requests</h2>
+    <p style="text-align:center; color:#9adfaa; margin-bottom:20px;">Review submissions, edit the intro text, and decide which requests are public or private.</p>
+
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <div style="background: #102e17; border: 1px solid #2ecc71; border-radius: 8px; padding: 12px; margin-bottom: 18px; color: #b8f5c9;">
+                {% for message in messages %}
+                    <div>{{ message }}</div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endwith %}
+
+    <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap:12px; margin-bottom:20px;">
+        <div style="background:#000; border:2px solid #2ecc71; border-radius:10px; padding:14px; text-align:center;"><div style="font-size:1.7rem; font-weight:700;">{{ total_requests }}</div><div>Total Requests</div></div>
+        <div style="background:#000; border:2px solid #2ecc71; border-radius:10px; padding:14px; text-align:center;"><div style="font-size:1.7rem; font-weight:700;">{{ new_requests }}</div><div>New</div></div>
+        <div style="background:#000; border:2px solid #2ecc71; border-radius:10px; padding:14px; text-align:center;"><div style="font-size:1.7rem; font-weight:700;">{{ private_requests }}</div><div>Private</div></div>
+        <div style="background:#000; border:2px solid #2ecc71; border-radius:10px; padding:14px; text-align:center;"><div style="font-size:1.7rem; font-weight:700;">{{ answered_requests }}</div><div>Answered</div></div>
+    </div>
+
+    <form method="POST" action="{{ url_for('manage_prayer_requests') }}" style="background:#000; border:2px solid #2ecc71; border-radius:10px; padding:20px; display:grid; gap:12px; margin-bottom:20px;">
+        <h3 style="margin:0; text-align:center;">Edit Prayer Requests Intro</h3>
+        <div>
+            <label><strong>Page Title</strong></label><br>
+            <input type="text" name="title" value="{{ page_title }}" required style="width:100%; padding:10px; border:1px solid #2ecc71; border-radius:6px; background:#000; color:#2ecc71;">
+        </div>
+        <div>
+            <label><strong>Intro Text</strong></label><br>
+            <textarea name="content" rows="5" style="width:100%; padding:10px; border:1px solid #2ecc71; border-radius:6px; background:#000; color:#2ecc71; resize:vertical;">{{ page_content }}</textarea>
+        </div>
+        <div style="display:flex; gap:10px; flex-wrap:wrap; justify-content:center;">
+            <button type="submit" style="background:#1f6f3a; color:#fff; border:none; border-radius:6px; padding:10px 14px; font-weight:bold; cursor:pointer;">Save Intro</button>
+            <a href="{{ url_for('prayer_requests_page') }}" style="display:inline-block; background:#222; color:#2ecc71; text-decoration:none; border:1px solid #2ecc71; border-radius:6px; padding:10px 14px; font-weight:bold;">View Public Page</a>
+        </div>
+    </form>
+
+    <h3 style="text-align:center; margin-bottom:14px;">Submitted Requests</h3>
+    {% if prayer_requests %}
+        <div style="display:grid; gap:16px;">
+        {% for request in prayer_requests %}
+            <div style="background:#000; border:2px solid #2ecc71; border-radius:10px; padding:18px;">
+                <div style="display:flex; justify-content:space-between; gap:12px; flex-wrap:wrap; margin-bottom:10px; color:#9adfaa;">
+                    <div><strong>Submitted:</strong> {{ request.created_at }}</div>
+                    <div><strong>ID:</strong> {{ request.id }}</div>
+                </div>
+
+                <form method="POST" action="{{ url_for('update_prayer_request', request_id=request.id) }}" style="display:grid; gap:12px;">
+                    <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap:12px;">
+                        <div>
+                            <label><strong>Name</strong></label><br>
+                            <input type="text" name="name" value="{{ request.name }}" style="width:100%; padding:10px; border:1px solid #2ecc71; border-radius:6px; background:#000; color:#2ecc71;">
+                        </div>
+                        <div>
+                            <label><strong>Email</strong></label><br>
+                            <input type="email" name="email" value="{{ request.email }}" style="width:100%; padding:10px; border:1px solid #2ecc71; border-radius:6px; background:#000; color:#2ecc71;">
+                        </div>
+                    </div>
+
+                    <div>
+                        <label><strong>Prayer Request</strong></label><br>
+                        <textarea name="request_text" rows="4" style="width:100%; padding:10px; border:1px solid #2ecc71; border-radius:6px; background:#000; color:#2ecc71; resize:vertical;">{{ request.request_text }}</textarea>
+                    </div>
+
+                    <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap:12px; align-items:end;">
+                        <div>
+                            <label><strong>Status</strong></label><br>
+                            <select name="status" style="width:100%; padding:10px; border:1px solid #2ecc71; border-radius:6px; background:#000; color:#2ecc71;">
+                                <option value="new" {% if request.status == 'new' %}selected{% endif %}>New</option>
+                                <option value="approved" {% if request.status == 'approved' %}selected{% endif %}>Approved for Public Page</option>
+                                <option value="answered" {% if request.status == 'answered' %}selected{% endif %}>Answered</option>
+                                <option value="archived" {% if request.status == 'archived' %}selected{% endif %}>Archived</option>
+                            </select>
+                        </div>
+                        <label style="display:flex; gap:8px; align-items:center; padding:10px 0;">
+                            <input type="checkbox" name="is_private" {% if request.is_private %}checked{% endif %}>
+                            <span>Keep private</span>
+                        </label>
+                    </div>
+
+                    <div style="display:flex; gap:10px; flex-wrap:wrap;">
+                        <button type="submit" style="background:#1f6f3a; color:#fff; border:none; border-radius:6px; padding:10px 14px; font-weight:bold; cursor:pointer;">Save Changes</button>
+                    </div>
+                </form>
+
+                <form method="POST" action="{{ url_for('delete_prayer_request', request_id=request.id) }}" onsubmit="return confirm('Delete this prayer request?');" style="margin-top:10px;">
+                    <button type="submit" style="background:#dc3545; color:#fff; border:none; border-radius:6px; padding:10px 14px; font-weight:bold; cursor:pointer;">Delete Request</button>
+                </form>
+            </div>
+        {% endfor %}
+        </div>
+    {% else %}
+        <div style="text-align:center; border:2px dashed #2ecc71; border-radius:10px; padding:18px; color:#9adfaa;">No prayer requests have been submitted yet.</div>
+    {% endif %}
+</div>
+{% endblock %}

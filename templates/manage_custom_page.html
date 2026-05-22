@@ -1,0 +1,218 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div style="padding: 20px; max-width: 900px; margin: 30px auto;">
+    <h2 style="text-align: center;">{% if page_slug == 'home' %}Manage Home Page{% elif page_slug == 'youth-ministry' %}Manage Youth Ministry Page{% else %}Manage Page: {{ page_title }}{% endif %}</h2>
+
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <div style="background: #102e17; border: 1px solid #2ecc71; border-radius: 6px; padding: 10px; margin-bottom: 15px; color: #b8f5c9;">
+                {% for message in messages %}
+                    <div>{{ message }}</div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endwith %}
+
+    {% if page_slug in ['youth-ministry', 'senior-adults'] %}
+    <div style="display:flex; gap:10px; flex-wrap:wrap; justify-content:center; margin-bottom: 16px;">
+        <a href="{{ url_for('manage_ministry_pages') }}" style="display:inline-block; background:#222; color:#2ecc71; text-decoration:none; border:1px solid #2ecc71; border-radius:6px; padding:10px 14px; font-weight:bold;">← Back to Ministry Pages</a>
+        <a href="{{ url_for('manage_custom_page', slug='youth-ministry') }}" style="display:inline-block; background:{% if page_slug == 'youth-ministry' %}#1f6f3a{% else %}#222{% endif %}; color:#fff; text-decoration:none; border:1px solid #2ecc71; border-radius:6px; padding:10px 14px; font-weight:bold;">Edit Youth Page</a>
+        <a href="{{ url_for('manage_custom_page', slug='senior-adults') }}" style="display:inline-block; background:{% if page_slug == 'senior-adults' %}#1f6f3a{% else %}#222{% endif %}; color:#fff; text-decoration:none; border:1px solid #2ecc71; border-radius:6px; padding:10px 14px; font-weight:bold;">Edit Senior Adult Page</a>
+    </div>
+    {% endif %}
+
+    <form method="POST" action="{{ url_for('manage_custom_page', slug=page_slug) }}" style="background: #000; border: 2px solid #2ecc71; border-radius: 10px; padding: 20px; display: flex; flex-direction: column; gap: 12px;">
+        <div>
+            <label><strong>Page Title</strong></label><br>
+            <input type="text" name="title" value="{{ page_title }}" required style="width: 100%; padding: 10px; border: 1px solid #2ecc71; border-radius: 5px; background: #000; color: #2ecc71;">
+        </div>
+
+        <div>
+            <label><strong>Page Content</strong></label><br>
+            <textarea name="content" rows="14" style="width: 100%; padding: 10px; border: 1px solid #2ecc71; border-radius: 5px; background: #000; color: #2ecc71; resize: vertical;">{{ page_content }}</textarea>
+        </div>
+
+        <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+            <button type="submit" style="background: #1f6f3a; color: #fff; border: none; border-radius: 6px; padding: 10px 14px; font-weight: bold; cursor: pointer;">Save Page</button>
+            <a href="{{ url_for(public_endpoint) }}" style="display: inline-block; background: #222; color: #2ecc71; text-decoration: none; border: 1px solid #2ecc71; border-radius: 6px; padding: 10px 14px; font-weight: bold;">{% if page_slug == 'youth-ministry' %}View Youth Public Page{% else %}View Public Page{% endif %}</a>
+        </div>
+    </form>
+
+    {% if page_slug in ['youth-ministry', 'senior-adults'] %}
+    <div style="background:#000; border:2px solid #2ecc71; border-radius:10px; padding:20px; margin-top:20px;">
+        <h3 style="margin-top:0; text-align:center;">Upload and Delete Images</h3>
+
+        <form method="POST" action="{{ url_for('upload_custom_page_image', slug=page_slug) }}" enctype="multipart/form-data" style="display:grid; gap:12px; margin-bottom:20px;">
+            <div>
+                <label><strong>Select Images</strong></label><br>
+                <div class="drag-drop-zone" data-drop-zone style="border:2px dashed #2ecc71; border-radius:10px; padding:20px; text-align:center; background:#06160c; cursor:pointer; margin-bottom:10px;">
+                    <div style="font-size:1.1rem; font-weight:bold; margin-bottom:6px;">Drag and drop images here</div>
+                    <div style="color:#9adfaa; font-size:0.95rem;">or click below to browse and upload</div>
+                </div>
+                <input type="file" name="images" accept=".png,.jpg,.jpeg,.gif,.webp" multiple required data-file-input style="width:100%; padding:8px; border:1px solid #2ecc71; border-radius:4px; background:#000; color:#2ecc71;">
+                <small data-file-feedback style="display:block; margin-top:6px; color:#8fd7aa;">No files selected yet.</small>
+            </div>
+            <div>
+                <label><strong>Name (optional)</strong></label><br>
+                <input type="text" name="name" placeholder="Youth Group" style="width:100%; padding:8px; border:1px solid #2ecc71; border-radius:4px; background:#000; color:#2ecc71;">
+            </div>
+            <div>
+                <label><strong>Title (optional)</strong></label><br>
+                <input type="text" name="title" placeholder="Wednesday Night" style="width:100%; padding:8px; border:1px solid #2ecc71; border-radius:4px; background:#000; color:#2ecc71;">
+            </div>
+            <div>
+                <button type="submit" style="background:#1f6f3a; color:#fff; border:none; border-radius:6px; padding:10px 14px; font-weight:bold; cursor:pointer;">Upload Images</button>
+            </div>
+        </form>
+
+        {% if page_images %}
+        <div data-sort-wrapper>
+            <div style="background:#06160c; border:1px dashed #2ecc71; border-radius:8px; padding:12px; margin-bottom:12px; color:#d9f5df;">⇅ Drag the image cards below to change their order, then click <strong>Save Image Order</strong>.</div>
+            <form method="POST" action="{{ url_for('reorder_custom_page_images', slug=page_slug) }}" data-sort-form style="margin-bottom:12px; text-align:center;">
+                <input type="hidden" name="ordered_ids" data-ordered-ids>
+                <button type="submit" data-save-order disabled style="background:#1f6f3a; color:#fff; border:none; border-radius:6px; padding:10px 14px; font-weight:bold; cursor:pointer; opacity:0.65;">Save Image Order</button>
+            </form>
+            <div data-sort-container style="display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap:16px;">
+            {% for image in page_images %}
+            <div data-sort-item data-image-id="{{ image.id }}" draggable="true" style="border:1px solid #2ecc71; border-radius:8px; overflow:hidden; background:#050505; cursor:grab;">
+                <img src="{{ url_for('static', filename='images/gallery/' + image.filename) }}" alt="Page image" style="width:100%; height:160px; object-fit:cover; display:block;">
+                <div style="padding:10px;">
+                    <div style="font-size:0.85rem; color:#8fd7aa; margin-bottom:8px;">⇅ Drag to reorder</div>
+                    <form method="POST" action="{{ url_for('update_custom_page_image', slug=page_slug, image_id=image.id) }}" style="margin-bottom:10px;">
+                        <label style="display:block; margin-bottom:4px;"><strong>Edit Name</strong></label>
+                        <input type="text" name="name" value="{{ image.display_name }}" placeholder="Name shown above image" style="width:100%; padding:8px; border:1px solid #2ecc71; border-radius:4px; background:#000; color:#2ecc71; margin-bottom:8px;">
+                        <label style="display:block; margin-bottom:4px;"><strong>Edit Title / Caption</strong></label>
+                        <input type="text" name="title" value="{{ image.display_title }}" placeholder="Wednesday Night" style="width:100%; padding:8px; border:1px solid #2ecc71; border-radius:4px; background:#000; color:#2ecc71; margin-bottom:8px;">
+                        <button type="submit" style="background:#1f6f3a; color:#fff; border:none; border-radius:4px; padding:7px 10px; cursor:pointer;">Save Title + Caption</button>
+                    </form>
+                    <form method="POST" action="{{ url_for('delete_custom_page_image', slug=page_slug, image_id=image.id) }}" onsubmit="return confirm('Delete this image?');">
+                        <button type="submit" style="background:#dc3545; color:#fff; border:none; border-radius:4px; padding:8px 10px; cursor:pointer;">Delete</button>
+                    </form>
+                </div>
+            </div>
+            {% endfor %}
+            </div>
+        </div>
+        {% else %}
+        <div style="text-align:center; border:1px dashed #2ecc71; border-radius:8px; padding:16px; color:#9adfaa;">No images uploaded for this page yet.</div>
+        {% endif %}
+    </div>
+    {% endif %}
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    document.querySelectorAll('[data-drop-zone]').forEach(function (zone) {
+        const wrapper = zone.parentElement;
+        const input = wrapper.querySelector('[data-file-input]');
+        const feedback = wrapper.querySelector('[data-file-feedback]');
+
+        if (!input) {
+            return;
+        }
+
+        const updateFeedback = function (files) {
+            if (!feedback) {
+                return;
+            }
+            if (!files || files.length === 0) {
+                feedback.textContent = 'No files selected yet.';
+                return;
+            }
+            const names = Array.from(files).map(file => file.name);
+            feedback.textContent = names.length + ' file(s): ' + names.join(', ');
+        };
+
+        zone.addEventListener('click', function () {
+            input.click();
+        });
+
+        ['dragenter', 'dragover'].forEach(function (eventName) {
+            zone.addEventListener(eventName, function (event) {
+                event.preventDefault();
+                event.stopPropagation();
+                zone.style.background = '#0d2615';
+                zone.style.borderColor = '#7ff0a3';
+            });
+        });
+
+        ['dragleave', 'drop'].forEach(function (eventName) {
+            zone.addEventListener(eventName, function (event) {
+                event.preventDefault();
+                event.stopPropagation();
+                zone.style.background = '#06160c';
+                zone.style.borderColor = '#2ecc71';
+            });
+        });
+
+        zone.addEventListener('drop', function (event) {
+            const files = event.dataTransfer.files;
+            input.files = files;
+            updateFeedback(files);
+        });
+
+        input.addEventListener('change', function () {
+            updateFeedback(input.files);
+        });
+    });
+
+    document.querySelectorAll('[data-sort-wrapper]').forEach(function (wrapper) {
+        const container = wrapper.querySelector('[data-sort-container]');
+        const form = wrapper.querySelector('[data-sort-form]');
+        const hiddenInput = wrapper.querySelector('[data-ordered-ids]');
+        const saveButton = wrapper.querySelector('[data-save-order]');
+        let draggedItem = null;
+
+        if (!container || !form || !hiddenInput || !saveButton) {
+            return;
+        }
+
+        const updateOrder = function (markDirty) {
+            const ids = Array.from(container.querySelectorAll('[data-sort-item]')).map(function (item) {
+                return item.getAttribute('data-image-id');
+            });
+            hiddenInput.value = ids.join(',');
+            if (markDirty && ids.length > 1) {
+                saveButton.disabled = false;
+                saveButton.style.opacity = '1';
+            }
+        };
+
+        container.querySelectorAll('[data-sort-item]').forEach(function (item) {
+            item.addEventListener('dragstart', function () {
+                draggedItem = item;
+                item.style.opacity = '0.55';
+            });
+
+            item.addEventListener('dragend', function () {
+                item.style.opacity = '1';
+                draggedItem = null;
+                updateOrder(true);
+            });
+
+            item.addEventListener('dragover', function (event) {
+                event.preventDefault();
+                if (!draggedItem || draggedItem === item) {
+                    return;
+                }
+                const rect = item.getBoundingClientRect();
+                const insertAfter = (event.clientY - rect.top) > (rect.height / 2);
+                if (insertAfter) {
+                    item.after(draggedItem);
+                } else {
+                    item.before(draggedItem);
+                }
+            });
+
+            item.addEventListener('drop', function (event) {
+                event.preventDefault();
+                updateOrder(true);
+            });
+        });
+
+        updateOrder(false);
+    });
+});
+</script>
+{% endblock %}

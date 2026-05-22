@@ -1,0 +1,19 @@
+import paramiko
+
+host = '129.121.84.30'
+user = 'root'
+password = r'2027April!'
+
+ssh = paramiko.SSHClient()
+ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+
+try:
+    ssh.connect(host, username=user, password=password)
+    
+    # This is the magic command that swaps the old code for the new code
+    print("Publishing updates...")
+    ssh.exec_command("systemctl restart ehbc")
+    
+    print("Success! Your updates are now live on ehbcnewsletterjeff.org")
+finally:
+    ssh.close()

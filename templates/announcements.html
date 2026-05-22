@@ -1,0 +1,103 @@
+{% extends "base.html" %}
+
+{% block title %}Announcements{% endblock %}
+
+{% block content %}
+<style>
+    /* This forces all text inside the announcements container to be black */
+    .announcements-container, 
+    .announcements-container h1, 
+    .announcements-container h2, 
+    .announcements-container h5, 
+    .announcements-container h6, 
+    .announcements-container p,
+    .announcements-container div {
+        color: #000000 !important;
+    }
+    .card {
+        border-color: #000000 !important;
+    }
+</style>
+
+<div class="container mt-4 announcements-container">
+    <h1 class="text-center mb-4">Church Announcements</h1>
+    
+    <div class="row">
+        {% for item in announcements %}
+            {% if item.title %}
+            <div class="col-md-6 mb-4">
+                <div class="card h-100 shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title fw-bold">{{ item.title }}</h5>
+                        {% if item.date %}<h6 class="card-subtitle mb-2">Date: {{ item.date }}</h6>{% endif %}
+                        {% if item.deadline %}<h6 class="card-subtitle mb-2">Deadline: {{ item.deadline }}</h6>{% endif %}
+                        <p class="card-text">{{ item.description | nl2br | safe }}</p>
+                    </div>
+                </div>
+            </div>
+            {% elif item.weekly_recurring %}
+            <div class="col-12 mt-4">
+                <h2 class="text-center mb-4">Weekly Recurring Activities</h2>
+                <div class="row">
+                    {% for activity in item.weekly_recurring %}
+                    <div class="col-md-4 mb-3">
+                        <div class="card h-100 bg-light">
+                            <div class="card-body">
+                                <h6 class="fw-bold">{{ activity.day }} @ {{ activity.time }}</h6>
+                                <p class="mb-1"><strong>{{ activity.activity }}</strong></p>
+                                <p class="card-text small">
+                                    {{ activity.Description or "" }}
+                                    {{ activity.Description1 or "" }}
+                                    {{ activity.Description2 or "" }}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+        {% endfor %}
+    </div>
+</div>
+
+
+    <div class="col-12 mt-4">
+        <h2 class="text-center mb-4">Special Events Coming Up</h2>
+        <div class="row">
+            <div class="col-md-4 mb-3">
+                <div class="card h-100" style="border: 1px solid #000;">
+                    <div class="card-body">
+                        <p class="mb-1"><strong>On Thursday, May 21st: Young Heart Trip</strong></p>
+                        <p class="card-text small">
+                            Young Heart will go to Polly’s Freeze in Georgetown, IN. We will enjoy lunch and some ice cream. We will meet at the church at 11:30am and carpool. Today is the last day to RSVP to Kevin McLendon.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4 mb-3">
+                <div class="card h-100" style="border: 1px solid #000;">
+                    <div class="card-body">
+                        <p class="mb-1"><strong>Catalyst Rescue Mission Dinner - May 30th</strong></p>
+                        <p class="card-text small">
+                            Here's your chance to reach out to our homeless community, provide food, help serve, or just talk or pray with them.
+                            Sign up at Greeter Station or see sign up link on EHBC Facebook group. If you have questions, please reach out to Becky Crump.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4 mb-3">
+                <div class="card h-100" style="border: 1px solid #000;">
+                    <div class="card-body">
+                        <p class="mb-1"><strong>Men’s Event – May 31st at 4:30pm</strong></p>
+                        <p class="card-text small">
+                            Men, join us as we cook out burgers, play corn hole, and spend time in the Word. Sign up at the Greeter Station.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

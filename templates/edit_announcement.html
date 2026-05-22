@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="edit-announcement-container">
+    <h2>Edit Announcement</h2>
+    
+    {% if announcement %}
+    <form method="POST" action="{{ url_for('edit_announcement', ann_id=announcement.id) }}" class="edit-announcement-form">
+        
+        <div class="edit-announcement-field">
+            <label class="edit-announcement-label"><strong>Announcement Title:</strong></label><br>
+            <input type="text" name="title" value="{{ announcement.title }}" placeholder="Announcement Title" required class="edit-announcement-input">
+        </div>
+
+        <div class="edit-announcement-field">
+            <label class="edit-announcement-label"><strong>Content:</strong></label><br>
+            <textarea name="content" placeholder="Announcement Content" required class="edit-announcement-textarea">{{ announcement.content or '' }}</textarea>
+        </div>
+
+        <div class="edit-announcement-actions">
+            <button type="submit" class="edit-announcement-button">Save Changes</button>
+            <a href="{{ url_for('manage_announcements') }}" class="edit-announcement-cancel">← Cancel</a>
+        </div>
+    </form>
+    {% else %}
+    <p class="edit-announcement-not-found">Announcement not found.</p>
+    <a href="{{ url_for('manage_announcements') }}" class="edit-announcement-cancel">← Back to Manage Announcements</a>
+    {% endif %}
+</div>
+{% endblock %}

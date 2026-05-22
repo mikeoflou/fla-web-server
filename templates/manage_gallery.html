@@ -1,0 +1,195 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="manage-gallery-container">
+    <h2 class="manage-gallery-title">Manage Gallery</h2>
+
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <div class="manage-gallery-messages">
+                {% for message in messages %}
+                    <div class="manage-gallery-message">{{ message }}</div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endwith %}
+
+    <form method="POST" action="{{ url_for('manage_gallery') }}" enctype="multipart/form-data" class="manage-gallery-form">
+        <div class="manage-gallery-upload-container">
+            <div class="manage-gallery-upload-title">Upload New Images Here</div>
+            <div class="manage-gallery-upload-description">Step 1: click <strong>Choose Files</strong>. Step 2: pick your pictures or a whole folder. Step 3: click <strong>Upload Images</strong>.</div>
+        </div>
+        <div>
+            <label><strong>Select Images or a Folder</strong></label><br>
+            <div class="manage-gallery-drag-drop-zone" data-drop-zone>
+                <div class="manage-gallery-drag-drop-title">Drag and drop gallery images here</div>
+                <div class="manage-gallery-drag-drop-description">or click below to browse files or a folder</div>
+            </div>
+            <input type="file" name="images" accept=".png,.jpg,.jpeg,.gif,.webp" multiple webkitdirectory directory required data-file-input class="manage-gallery-file-input">
+            <small data-file-feedback class="manage-gallery-file-feedback">You can choose many image files at once or select a whole folder of pictures.</small>
+        </div>
+        <div>
+            <label><strong>Name (optional, applied to all selected)</strong></label><br>
+            <input type="text" name="name" placeholder="Jason Shaw" class="manage-gallery-input">
+        </div>
+        <div>
+            <label><strong>Title (optional, applied to all selected)</strong></label><br>
+            <input type="text" name="title" placeholder="Closing Prayer" class="manage-gallery-input">
+        </div>
+        <div>
+            <button type="submit" class="manage-gallery-submit">Upload Images</button>
+            <a href="{{ url_for('gallery_page') }}" class="manage-gallery-view">View Public Gallery</a>
+        </div>
+    </form>
+
+    {% if images %}
+    <div data-sort-wrapper class="manage-gallery-sort-wrapper">
+        <div class="manage-gallery-sort-description">⇅ Drag the image cards below to change their order, then click <strong>Save Image Order</strong>.</div>
+        <form method="POST" action="{{ url_for('reorder_gallery_images') }}" data-sort-form class="manage-gallery-sort-form">
+            <input type="hidden" name="ordered_ids" data-ordered-ids>
+            <button type="submit" data-save-order disabled class="manage-gallery-save-order">Save Image Order</button>
+        </form>
+        <div data-sort-container class="manage-gallery-sort-container">
+        {% for image in images %}
+        <div data-sort-item data-image-id="{{ image.id }}" draggable="true" class="manage-gallery-item">
+            <div class="manage-gallery-item-header">{{ image.display_name }}</div>
+            <img src="{{ url_for('static', filename='images/gallery/' + image.filename) }}" alt="Gallery image" class="manage-gallery-item-image">
+            <div class="manage-gallery-item-title">{{ image.display_title or 'No title yet.' }}</div>
+            <div class="manage-gallery-item-actions">
+                <div class="manage-gallery-item-drag">⇅ Drag to reorder</div>
+                <form method="POST" action="{{ url_for('update_gallery_image', image_id=image.id) }}" class="manage-gallery-item-edit-form">
+                    <label class="manage-gallery-item-edit-label"><strong>Edit Name</strong></label>
+                    <input type="text" name="name" value="{{ image.display_name }}" placeholder="Name shown above image" class="manage-gallery-item-edit-input">
+                    <label class="manage-gallery-item-edit-label"><strong>Edit Title</strong></label>
+                    <input type="text" name="title" value="{{ image.display_title }}" placeholder="Title shown under image" class="manage-gallery-item-edit-input">
+                    <button type="submit" class="manage-gallery-item-edit-submit">Save Name + Title</button>
+                </form>
+                <div class="manage-gallery-item-uploaded">Uploaded: {{ image.date_uploaded }}</div>
+                <form method="POST" action="{{ url_for('delete_gallery_image', image_id=image.id) }}" class="manage-gallery-item-delete-form" onsubmit="return confirm('Delete this image?');">
+                    <button type="submit" class="manage-gallery-item-delete">Delete</button>
+                </form>
+            </div>
+        </div>
+        {% endfor %}
+        </div>
+    </div>
+    {% else %}
+    <div class="manage-gallery-no-images">No gallery images uploaded yet.</div>
+    {% endif %}
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    document.querySelectorAll('[data-drop-zone]').forEach(function (zone) {
+        const wrapper = zone.parentElement;
+        const input = wrapper.querySelector('[data-file-input]');
+        const feedback = wrapper.querySelector('[data-file-feedback]');
+
+        if (!input) {
+            return;
+        }
+
+        const updateFeedback = function (files) {
+            if (!feedback) {
+                return;
+            }
+            if (!files || files.length === 0) {
+                feedback.textContent = 'No files selected yet.';
+                return;
+            }
+            const names = Array.from(files).map(file => file.name);
+            feedback.textContent = names.length + ' file(s): ' + names.join(', ');
+        };
+
+        zone.addEventListener('click', function () {
+            input.click();
+        });
+
+        ['dragenter', 'dragover'].forEach(function (eventName) {
+            zone.addEventListener(eventName, function (event) {
+                event.preventDefault();
+                event.stopPropagation();
+                zone.style.background = '#0d2615';
+                zone.style.borderColor = '#7ff0a3';
+            });
+        });
+
+        ['dragleave', 'drop'].forEach(function (eventName) {
+            zone.addEventListener(eventName, function (event) {
+                event.preventDefault();
+                event.stopPropagation();
+                zone.style.background = '#06160c';
+                zone.style.borderColor = '#2ecc71';
+            });
+        });
+
+        zone.addEventListener('drop', function (event) {
+            const files = event.dataTransfer.files;
+            input.files = files;
+            updateFeedback(files);
+        });
+
+        input.addEventListener('change', function () {
+            updateFeedback(input.files);
+        });
+    });
+
+    document.querySelectorAll('[data-sort-wrapper]').forEach(function (wrapper) {
+        const container = wrapper.querySelector('[data-sort-container]');
+        const form = wrapper.querySelector('[data-sort-form]');
+        const hiddenInput = wrapper.querySelector('[data-ordered-ids]');
+        const saveButton = wrapper.querySelector('[data-save-order]');
+        let draggedItem = null;
+
+        if (!container || !form || !hiddenInput || !saveButton) {
+            return;
+        }
+
+        const updateOrder = function (markDirty) {
+            const ids = Array.from(container.querySelectorAll('[data-sort-item]')).map(function (item) {
+                return item.getAttribute('data-image-id');
+            });
+            hiddenInput.value = ids.join(',');
+            if (markDirty && ids.length > 1) {
+                saveButton.disabled = false;
+                saveButton.style.opacity = '1';
+            }
+        };
+
+        container.querySelectorAll('[data-sort-item]').forEach(function (item) {
+            item.addEventListener('dragstart', function () {
+                draggedItem = item;
+                item.style.opacity = '0.55';
+            });
+
+            item.addEventListener('dragend', function () {
+                item.style.opacity = '1';
+                draggedItem = null;
+                updateOrder(true);
+            });
+
+            item.addEventListener('dragover', function (event) {
+                event.preventDefault();
+                if (!draggedItem || draggedItem === item) {
+                    return;
+                }
+                const rect = item.getBoundingClientRect();
+                const insertAfter = (event.clientY - rect.top) > (rect.height / 2);
+                if (insertAfter) {
+                    item.after(draggedItem);
+                } else {
+                    item.before(draggedItem);
+                }
+            });
+
+            item.addEventListener('drop', function (event) {
+                event.preventDefault();
+                updateOrder(true);
+            });
+        });
+
+        updateOrder(false);
+    });
+});
+</script>
+{% endblock %}

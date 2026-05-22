@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container text-center" style="margin-top: 50px;">
+    <h1 style="color: #2e7d32; font-weight: bold; margin-bottom: 30px;">
+        Welcome to Eastern Heights Baptist Church Newsletter
+    </h1>
+    <div class="row justify-content-center">
+        <div class="col-md-6" style="text-align: center; line-height: 2; font-size: 1.1rem;">
+            <div><a href="{{ url_for('index') }}" style="color: #2ecc71; text-decoration: none;">Home</a></div>
+            <div><a href="{{ url_for('Jason') }}" style="color: #2ecc71; text-decoration: none;">Order of Worship</a></div>
+            <div><a href="{{ url_for('Chris') }}" style="color: #2ecc71; text-decoration: none;">Sermons</a></div>
+            <div><a href="{{ url_for('announcements') }}" style="color: #2ecc71; text-decoration: none;">Church Announcements</a></div>
+            <div><a href="{{ url_for('senior_adults') }}" style="color: #2ecc71; text-decoration: none;">Senior Adults Ministry</a></div>
+            
+        </div>
+    </div>
+    <textarea>
+What: The Lockout 2.0. An all-night adventure with Eastern Heights Baptist Church 
+When: Friday May 15th at 8pm until Saturday May 16th at 7:30 AM
+Where: All students and adult leaders arrive at Eastern Heights Baptist Church by 8:00 PM on Friday May 15th. Address: 4202 Helen Road. Jeffersonville, IN 47130. 
+SCHEDULE 
+8:00 PM – Arrive at Eastern Heights and turn in final payment and permission slip forms. 
+Eat Chic Fil A at Eastern Heights before we depart. 
+Destination 1: Malibu Jacks in Louisville, KY.
+Destination 2: Main Event in Louisville, KY. 
+2am Breakfast on the bus – fruit, muffins, water, etc., 
+Destination 3: Breakout Louisville. Escape rooms. 
+Destination 4: New Albany Clay Collective – Make your own clay crafts. 
+7:00 AM – Donut breakfast at Eastern Heights Baptist Church
+7:30 AM – Depart and go Home and Sleep. 
+ 
+
+Cost: $60.00 per student. Grades 6-12.  
+Deposit: A deposit of $20 is due immediately as we have a limited number of spots available on the bus. The final payment ($40.00) is due on Friday May 15th. The deposit is non-refundable. 
+Payment: You can reserve you spot via in 3 ways: (a) cash or (b) check to Eastern Heights Baptist Church. On the check, designate the student’s name and Lockout. (c) You can pay online at https://www.ehbcjeff.com/.  In the “Give” Portal. First time user:  You will need to set up an account and link to a bank account. Make sure that you designate the payment in the, “Youth” column. Please put in the note section the name of the student and Lockout. You will have to pay the processing fee.  
+Questions: Contact Youth Pastor, Patrick Lynch at Patrick.lynch121307@gmail.com or at 910-580-0929.  
+
+    </textarea>
+</div>
+{% endblock %}
