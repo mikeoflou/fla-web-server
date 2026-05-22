@@ -52,3 +52,10 @@ verification_command
 # Ignore Python cache files
 __pycache__/
 *.pyc
+__pycache__/
+*.pyc
+.env
+.vscode/
+site.db
+ffprobe.exe
+manage*.html
