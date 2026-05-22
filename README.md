@@ -1,7 +1,7 @@
 # EHBC Church Website & Web Application
 
 
-**Live Website:** [http://129.121.84.30](http://129.121.84.30)
+Live Website: http://129.121.84.30
 
 
 
