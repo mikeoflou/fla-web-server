@@ -6,17 +6,17 @@ app = Flask(__name__)
 app.secret_key = 'dev-key-12345'
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
-
 @app.route('/')
 def index():
-    source = request.args.get('view')
+    # Check if the user clicked the link from the church's Facebook page
+    referer = request.headers.get('Referer', '')
+    from_facebook = 'fbclid' in request.args or 'facebook.com' in referer.lower()
     
-    if source == 'ehbc-members-only':
-        # This tells the HTML to show the "Volunteers" menu item
+    if from_facebook:
+        # Show the "Volunteers" menu item to Facebook visitors
         return render_template('index.html', show_menu=True)
     else:
-        # Regular public visitors still see the home page completely fine,
-        # but the Volunteer menu item stays invisible to them
+        # Hide the "Volunteers" menu item for everyone else
         return render_template('index.html', show_menu=False)
 
 @app.route('/chris')
